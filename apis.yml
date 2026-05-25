@@ -1,0 +1,191 @@
+aid: bls-gov
+name: Bureau of Labor Statistics
+description: >-
+  The U.S. Bureau of Labor Statistics (BLS) is the principal federal statistical
+  agency responsible for measuring labor market activity, working conditions,
+  price changes, and productivity in the U.S. economy. BLS operates the Public
+  Data API at api.bls.gov, providing programmatic JSON access to published
+  historical time series across more than 75 surveys — including the Consumer
+  Price Index (CPI), Producer Price Index (PPI), Employment Situation (CES),
+  Local Area Unemployment Statistics (LAUS), Quarterly Census of Employment and
+  Wages (QCEW), Occupational Employment and Wage Statistics (OEWS), Employment
+  Cost Index (ECI), Productivity, Import/Export Price Indexes, and Census of
+  Fatal Occupational Injuries (CFOI). Version 1 is open without registration;
+  Version 2 requires a free registration key and provides higher daily limits,
+  more series per request, longer year ranges, catalog metadata, statistical
+  calculations, and annual averages.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Federal Government
+  - Labor Statistics
+  - Economic Data
+  - Consumer Price Index
+  - Producer Price Index
+  - Employment
+  - Unemployment
+  - Wages
+  - Productivity
+  - Open Data
+  - Time Series
+created: '2026-05-25'
+modified: '2026-05-25'
+url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/apis.yml
+specificationVersion: '0.19'
+apis:
+  - aid: bls-gov:bls-public-data-api
+    name: BLS Public Data API
+    description: >-
+      The BLS Public Data API is the agency's public REST + JSON service for
+      retrieving published historical time series across every BLS program.
+      v1 is open and unauthenticated with smaller daily limits and per-request
+      caps; v2 requires a free registration key and unlocks 500 queries per day,
+      up to 50 series per request, up to 20 years per query, optional catalog
+      metadata, net/percent-change calculations, and annual averages. All
+      requests return a uniform JSON envelope with status, responseTime, and
+      Results.series, where each series carries data points keyed by year and
+      period (M01–M12 for monthly, Q01–Q04 for quarterly, S01–S03 for semi
+      annual, A01 for annual, M13 for annual averages).
+    humanURL: https://www.bls.gov/developers/home.htm
+    baseURL: https://api.bls.gov/publicAPI/v2
+    tags:
+      - Labor Statistics
+      - Employment
+      - Unemployment
+      - Consumer Price Index
+      - Producer Price Index
+      - Economic Data
+      - Time Series
+      - Open Data
+    properties:
+      - type: Documentation
+        url: https://www.bls.gov/developers/home.htm
+      - type: Documentation
+        url: https://www.bls.gov/developers/api_signature_v2.htm
+      - type: GettingStarted
+        url: https://www.bls.gov/developers/api_FAQs.htm
+      - type: Registration
+        url: https://data.bls.gov/registrationEngine/
+      - type: TermsOfService
+        url: https://www.bls.gov/developers/termsOfService.htm
+      - type: SignatureExamples
+        url: https://www.bls.gov/developers/api_sample_code.htm
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/openapi/bls-public-data-api-openapi.yml
+      - type: JSONSchema
+        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
+      - type: JSONStructure
+        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
+      - type: JSONLD
+        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld
+      - type: SpectralRuleset
+        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml
+      - type: NaftikoCapability
+        url: capabilities/bls-public-data-time-series.yaml
+      - type: NaftikoCapability
+        url: capabilities/bls-public-data-popular-series.yaml
+      - type: NaftikoCapability
+        url: capabilities/bls-public-data-surveys.yaml
+      - type: DataAPI
+        url: https://api.bls.gov/publicAPI/v2/timeseries/data/
+      - type: DataAPI
+        url: https://api.bls.gov/publicAPI/v2/surveys
+      - type: DataAPI
+        url: https://api.bls.gov/publicAPI/v2/timeseries/popular
+      - type: RateLimits
+        url: rate-limits/bls-gov-rate-limits.yml
+      - type: Plans
+        url: plans/bls-gov-plans-pricing.yml
+      - type: FinOps
+        url: finops/bls-gov-finops.yml
+      - type: Examples
+        url: examples/bls-get-unemployment-rate-example.json
+      - type: Examples
+        url: examples/bls-list-surveys-example.json
+      - type: Vocabulary
+        url: vocabulary/bls-gov-vocabulary.yml
+    contact:
+      - FN: BLS Data Support
+        url: https://www.bls.gov/developers/home.htm
+        email: data_staff@bls.gov
+features:
+  - name: Time Series Data Retrieval
+    description: Retrieve historical time series for one or many BLS series IDs in a single JSON response.
+  - name: Multi-Series Batch Queries
+    description: With a v2 registration key, request up to 50 series IDs in a single POST and span up to 20 years.
+  - name: Date Range Filtering
+    description: Constrain queries with startyear/endyear (and optional startperiod/endperiod) to retrieve only the range you need.
+  - name: Statistical Calculations
+    description: Optional net change and percent change calculations over 1, 3, 6, and 12 month windows on v2 requests.
+  - name: Catalog Metadata
+    description: Request series-level catalog metadata (survey, area, item, seasonality) inline with the time series payload.
+  - name: Annual Averages
+    description: Include the M13 annual average period alongside monthly values for CPI, PPI, and similar series.
+  - name: Latest Observation Shortcut
+    description: Append latest=true to the GET endpoint to retrieve only the most recent data point for a series.
+  - name: Survey Discovery
+    description: List all BLS surveys with their two-letter abbreviation and human-readable name.
+  - name: Survey Metadata
+    description: Inspect a single survey for capability flags (allowsNetChange, allowsPercentChange, hasAnnualAverages).
+  - name: Popular Series
+    description: Retrieve the 25 most-requested series IDs overall or scoped to a specific survey abbreviation.
+useCases:
+  - name: Inflation Monitoring
+    description: Track CPI-U, CPI-W, Chained CPI, and PPI series for inflation dashboards and forecasting.
+  - name: Labor Market Analysis
+    description: Pull unemployment rate, labor force participation, payroll employment, and JOLTS series to monitor the labor market.
+  - name: Wage & Compensation Benchmarking
+    description: Use OEWS, ECI, and ECEC series for occupational wage and total compensation benchmarking.
+  - name: Regional Economic Dashboards
+    description: Combine LAUS and QCEW series for state, MSA, and county-level employment and unemployment dashboards.
+  - name: Workplace Safety Reporting
+    description: Surface CFOI fatal injury and SOII non-fatal injury statistics for ESG and safety reporting.
+  - name: Productivity Research
+    description: Retrieve labor productivity and unit labor cost series for productivity research.
+  - name: Trade Price Analysis
+    description: Pull Import/Export Price Index series to analyze cost pass-through in supply chains.
+solutions:
+  - name: Economic Intelligence Platforms
+    description: Embed BLS series directly into market intelligence and macro research platforms.
+  - name: HR Analytics & Compensation Tools
+    description: Power HR comp planning and pay equity tools with OEWS and ECI data.
+  - name: Open Government Data Portals
+    description: Enrich open data portals and civic apps with BLS statistical datasets.
+  - name: AI Economic Agents
+    description: Feed BLS time series into AI assistants and Naftiko capabilities for economic analysis and forecasting.
+integrations:
+  - name: data.gov
+    description: BLS datasets are cataloged at catalog.data.gov under the bls-gov organization.
+    url: https://catalog.data.gov/organization/bls-gov
+  - name: FRED (St. Louis Fed)
+    description: FRED ingests and redistributes a large share of BLS series and is a common downstream consumer.
+    url: https://fred.stlouisfed.org/
+  - name: Census Bureau
+    description: BLS QCEW and OEWS data align with Census Bureau geographic and industry classifications (NAICS, SOC).
+    url: https://www.census.gov/
+common:
+  - type: Website
+    url: https://www.bls.gov/
+  - type: Developer
+    url: https://www.bls.gov/developers/
+  - type: Documentation
+    url: https://www.bls.gov/developers/home.htm
+  - type: Registration
+    url: https://data.bls.gov/registrationEngine/
+  - type: TermsOfService
+    url: https://www.bls.gov/developers/termsOfService.htm
+  - type: ContactUs
+    url: https://www.bls.gov/contact/
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/bureau-of-labor-statistics
+  - type: Twitter
+    url: https://twitter.com/BLS_gov
+  - type: Facebook
+    url: https://www.facebook.com/BLSgov
+  - type: YouTube
+    url: https://www.youtube.com/user/blsgov
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

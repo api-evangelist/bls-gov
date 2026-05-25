@@ -1,0 +1,161 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: BLS Public Data API — Time Series
+  description: 'BLS Public Data API — Time Series. 2 operations. Lead operation: Get Multiple Time Series Data. Self-contained
+    Naftiko capability covering one Bureau of Labor Statistics business surface.'
+  tags:
+  - Bureau of Labor Statistics
+  - Time Series
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_BUREAU_OF_LABOR_STATISTICS_API_KEY: US_BUREAU_OF_LABOR_STATISTICS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bls-public-data-time-series
+    baseUri: https://api.bls.gov/publicAPI/v2
+    description: BLS Public Data API — Time Series business capability. Self-contained, no shared references.
+    resources:
+    - name: timeseries-data
+      path: /timeseries/data/
+      operations:
+      - name: getmultipletimeseries
+        method: POST
+        description: Get Multiple Time Series Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: timeseries-data-seriesId
+      path: /timeseries/data/{seriesId}
+      operations:
+      - name: getsingletimeseries
+        method: GET
+        description: Get Single Time Series Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: seriesId
+          in: path
+          type: string
+          description: The BLS series identifier (e.g., LNS14000000 for national unemployment rate, CUUR0000SA0 for CPI-U
+            All Items)
+          required: true
+        - name: registrationkey
+          in: query
+          type: string
+          description: Your registered BLS API key (required for v2 higher limits)
+        - name: startyear
+          in: query
+          type: string
+          description: Beginning year for data range (4-digit year)
+        - name: endyear
+          in: query
+          type: string
+          description: Ending year for data range (4-digit year)
+        - name: catalog
+          in: query
+          type: boolean
+          description: Include series catalog/description information in response (v2 only)
+        - name: calculations
+          in: query
+          type: boolean
+          description: Include net change and percent change calculations (v2 only)
+        - name: annualaverage
+          in: query
+          type: boolean
+          description: Include annual average values (v2 only)
+    authentication:
+      type: apikey
+      key: registrationkey
+      value: '{{env.US_BUREAU_OF_LABOR_STATISTICS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: bls-public-data-time-series-rest
+    port: 8080
+    description: REST adapter for BLS Public Data API — Time Series. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/timeseries/data
+      name: timeseries-data
+      description: REST surface for timeseries-data.
+      operations:
+      - method: POST
+        name: getmultipletimeseries
+        description: Get Multiple Time Series Data
+        call: bls-public-data-time-series.getmultipletimeseries
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/timeseries/data/{seriesid}
+      name: timeseries-data-seriesid
+      description: REST surface for timeseries-data-seriesId.
+      operations:
+      - method: GET
+        name: getsingletimeseries
+        description: Get Single Time Series Data
+        call: bls-public-data-time-series.getsingletimeseries
+        with:
+          seriesId: rest.seriesId
+          registrationkey: rest.registrationkey
+          startyear: rest.startyear
+          endyear: rest.endyear
+          catalog: rest.catalog
+          calculations: rest.calculations
+          annualaverage: rest.annualaverage
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bls-public-data-time-series-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for BLS Public Data API — Time Series. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-multiple-time-series-data
+      description: Get Multiple Time Series Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: bls-public-data-time-series.getmultipletimeseries
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-single-time-series-data
+      description: Get Single Time Series Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bls-public-data-time-series.getsingletimeseries
+      with:
+        seriesId: tools.seriesId
+        registrationkey: tools.registrationkey
+        startyear: tools.startyear
+        endyear: tools.endyear
+        catalog: tools.catalog
+        calculations: tools.calculations
+        annualaverage: tools.annualaverage
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,132 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "bls": "https://www.bls.gov/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcat": "https://www.w3.org/ns/dcat#",
+    "dct": "http://purl.org/dc/terms/",
+
+    "BLSTimeSeries": {
+      "@id": "bls:data/TimeSeries",
+      "@type": "@id"
+    },
+    "BLSSurvey": {
+      "@id": "bls:survey/Survey",
+      "@type": "@id"
+    },
+    "BLSDataPoint": {
+      "@id": "bls:data/DataPoint",
+      "@type": "@id"
+    },
+
+    "seriesID": {
+      "@id": "bls:data/seriesID",
+      "@type": "xsd:string"
+    },
+    "seriesTitle": {
+      "@id": "dct:title",
+      "@type": "xsd:string"
+    },
+    "surveyName": {
+      "@id": "bls:survey/surveyName",
+      "@type": "xsd:string"
+    },
+    "surveyAbbreviation": {
+      "@id": "bls:survey/abbreviation",
+      "@type": "xsd:string"
+    },
+    "seasonality": {
+      "@id": "bls:data/seasonallyAdjusted",
+      "@type": "xsd:string"
+    },
+    "measureDataType": {
+      "@id": "bls:data/measureType",
+      "@type": "xsd:string"
+    },
+    "area": {
+      "@id": "schema:areaServed",
+      "@type": "xsd:string"
+    },
+    "year": {
+      "@id": "schema:temporalCoverage",
+      "@type": "xsd:gYear"
+    },
+    "period": {
+      "@id": "bls:data/period",
+      "@type": "xsd:string"
+    },
+    "periodName": {
+      "@id": "bls:data/periodName",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "schema:value",
+      "@type": "xsd:string"
+    },
+    "footnotes": {
+      "@id": "bls:data/footnotes",
+      "@container": "@set"
+    },
+    "footnoteCode": {
+      "@id": "bls:data/footnoteCode",
+      "@type": "xsd:string"
+    },
+    "footnoteText": {
+      "@id": "bls:data/footnoteText",
+      "@type": "xsd:string"
+    },
+    "calculations": {
+      "@id": "bls:data/calculations"
+    },
+    "netChanges": {
+      "@id": "bls:data/netChanges"
+    },
+    "pctChanges": {
+      "@id": "bls:data/percentChanges"
+    },
+    "beginYear": {
+      "@id": "dcat:startDate",
+      "@type": "xsd:gYear"
+    },
+    "endYear": {
+      "@id": "dcat:endDate",
+      "@type": "xsd:gYear"
+    },
+    "status": {
+      "@id": "bls:api/status",
+      "@type": "xsd:string"
+    },
+    "responseTime": {
+      "@id": "bls:api/responseTime",
+      "@type": "xsd:integer"
+    },
+    "Results": {
+      "@id": "bls:api/Results"
+    },
+
+    "Dataset": "dcat:Dataset",
+    "Distribution": "dcat:Distribution",
+    "GovernmentOrganization": "schema:GovernmentOrganization",
+    "publisher": {
+      "@id": "dct:publisher",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "dct:description",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "dct:title",
+      "@type": "xsd:string"
+    },
+    "issued": {
+      "@id": "dct:issued",
+      "@type": "xsd:date"
+    },
+    "modified": {
+      "@id": "dct:modified",
+      "@type": "xsd:date"
+    }
+  }
+}

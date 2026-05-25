@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: BLS Public Data API — Popular Series
+  description: 'BLS Public Data API — Popular Series. 1 operations. Lead operation: Get Popular BLS Series. Self-contained
+    Naftiko capability covering one Bureau of Labor Statistics business surface.'
+  tags:
+  - Bureau of Labor Statistics
+  - Popular Series
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_BUREAU_OF_LABOR_STATISTICS_API_KEY: US_BUREAU_OF_LABOR_STATISTICS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bls-public-data-popular-series
+    baseUri: https://api.bls.gov/publicAPI/v2
+    description: BLS Public Data API — Popular Series business capability. Self-contained, no shared references.
+    resources:
+    - name: timeseries-popular
+      path: /timeseries/popular
+      operations:
+      - name: getpopularseries
+        method: GET
+        description: Get Popular BLS Series
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: registrationkey
+          in: query
+          type: string
+          description: Your registered BLS API key
+        - name: survey
+          in: query
+          type: string
+          description: Filter popular series by survey abbreviation
+    authentication:
+      type: apikey
+      key: registrationkey
+      value: '{{env.US_BUREAU_OF_LABOR_STATISTICS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: bls-public-data-popular-series-rest
+    port: 8080
+    description: REST adapter for BLS Public Data API — Popular Series. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/timeseries/popular
+      name: timeseries-popular
+      description: REST surface for timeseries-popular.
+      operations:
+      - method: GET
+        name: getpopularseries
+        description: Get Popular BLS Series
+        call: bls-public-data-popular-series.getpopularseries
+        with:
+          registrationkey: rest.registrationkey
+          survey: rest.survey
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bls-public-data-popular-series-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for BLS Public Data API — Popular Series. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-popular-bls-series
+      description: Get Popular BLS Series
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bls-public-data-popular-series.getpopularseries
+      with:
+        registrationkey: tools.registrationkey
+        survey: tools.survey
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,94 @@
+rules:
+  bls-info-contact:
+    description: BLS API specs must include contact information
+    message: "Contact information is required in info object"
+    severity: warn
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy
+
+  bls-operation-tags:
+    description: All operations must be tagged
+    message: "Operation '{{property}}' must have at least one tag"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  bls-operation-summary:
+    description: All operations must have a summary
+    message: "Operation '{{property}}' must have a summary"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  bls-operation-id:
+    description: All operations must have an operationId
+    message: "Operation must have an operationId"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  bls-parameter-description:
+    description: All parameters must have a description
+    message: "Parameter '{{value}}' must have a description"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].parameters[*]"
+    then:
+      field: description
+      function: truthy
+
+  bls-response-schema:
+    description: All 200 responses must have a schema
+    message: "200 response must have content with schema"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].responses.200"
+    then:
+      field: content
+      function: truthy
+
+  bls-registration-key-pattern:
+    description: Registration key parameters should follow BLS naming convention
+    message: "Registration key query parameter should be named 'registrationkey'"
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete].parameters[?(@.in == 'query')]"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(registrationkey|seriesid|startyear|endyear|catalog|calculations|annualaverage|aspects|survey|latest)$"
+      field: name
+
+  bls-series-id-format:
+    description: Series ID path parameters should follow BLS naming conventions
+    message: "Series ID path parameter should have a pattern describing BLS format"
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete].parameters[?(@.name == 'seriesId')]"
+    then:
+      field: schema.pattern
+      function: truthy
+
+  bls-json-responses:
+    description: BLS API should return JSON responses
+    message: "Responses must include application/json content type"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].responses[200,201].content"
+    then:
+      field: application/json
+      function: truthy
+
+  bls-version-servers:
+    description: BLS API servers should specify versioned paths
+    message: "Server URL should include API version path segment"
+    severity: info
+    given: "$.servers[*]"
+    then:
+      field: url
+      function: pattern
+      functionOptions:
+        match: "v[12]"

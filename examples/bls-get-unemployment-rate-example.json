@@ -1,0 +1,123 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "seriesid": ["LNS14000000"],
+      "startyear": "2022",
+      "endyear": "2024",
+      "catalog": true,
+      "calculations": true,
+      "annualaverage": false,
+      "registrationkey": "YOUR_API_KEY"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "status": "REQUEST_SUCCEEDED",
+      "responseTime": 78,
+      "message": [],
+      "Results": {
+        "series": [
+          {
+            "seriesID": "LNS14000000",
+            "catalog": {
+              "series_title": "Unemployment Rate",
+              "series_id": "LNS14000000",
+              "seasonality": "Seasonally Adjusted",
+              "survey_name": "Current Population Survey",
+              "survey_abbreviation": "LN",
+              "measure_data_type": "Percent",
+              "area": "U.S.",
+              "begin_year": "1948",
+              "begin_period": "M01",
+              "end_year": "2024",
+              "end_period": "M12"
+            },
+            "data": [
+              {
+                "year": "2024",
+                "period": "M12",
+                "periodName": "December",
+                "latest": "true",
+                "value": "4.2",
+                "footnotes": [],
+                "calculations": {
+                  "net_changes": {
+                    "1": "0.0",
+                    "3": "0.2",
+                    "6": "0.5",
+                    "12": "0.6"
+                  },
+                  "pct_changes": {
+                    "1": "0.0",
+                    "3": "5.0",
+                    "6": "13.5",
+                    "12": "16.7"
+                  }
+                }
+              },
+              {
+                "year": "2024",
+                "period": "M11",
+                "periodName": "November",
+                "latest": "false",
+                "value": "4.2",
+                "footnotes": [],
+                "calculations": {
+                  "net_changes": {
+                    "1": "0.0",
+                    "12": "0.6"
+                  },
+                  "pct_changes": {
+                    "1": "0.0",
+                    "12": "16.7"
+                  }
+                }
+              },
+              {
+                "year": "2023",
+                "period": "M01",
+                "periodName": "January",
+                "latest": "false",
+                "value": "3.4",
+                "footnotes": [],
+                "calculations": {
+                  "net_changes": {
+                    "12": "-0.3"
+                  },
+                  "pct_changes": {
+                    "12": "-8.1"
+                  }
+                }
+              },
+              {
+                "year": "2022",
+                "period": "M01",
+                "periodName": "January",
+                "latest": "false",
+                "value": "4.0",
+                "footnotes": [],
+                "calculations": {
+                  "net_changes": {
+                    "12": "-0.5"
+                  },
+                  "pct_changes": {
+                    "12": "-11.1"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

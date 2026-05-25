@@ -1,0 +1,183 @@
+vocabulary:
+  name: US Bureau of Labor Statistics Vocabulary
+  description: >-
+    Domain vocabulary for the Bureau of Labor Statistics, covering labor market
+    concepts, survey programs, statistical measures, data series identifiers,
+    and economic indicators used in BLS publications and APIs.
+  version: '1.0'
+  created: '2026-05-03'
+  modified: '2026-05-03'
+  tags:
+    - Federal Government
+    - Labor Statistics
+    - Economic Data
+    - Employment
+
+terms:
+  - term: Series ID
+    definition: >-
+      A unique alphanumeric identifier assigned to each BLS time series. The
+      prefix letters indicate the survey program (e.g., LN for Current
+      Population Survey, CU for CPI-U, CE for Current Employment Statistics).
+    examples:
+      - LNS14000000 (Seasonally Adjusted Unemployment Rate)
+      - CUUR0000SA0 (CPI-U All Items, Not Seasonally Adjusted)
+      - CES0000000001 (Total Nonfarm Employment)
+
+  - term: Time Series
+    definition: >-
+      A sequence of statistical measurements taken at successive points in time,
+      organized by BLS series ID. Each series represents a specific economic
+      indicator measured over time with consistent methodology.
+
+  - term: Seasonally Adjusted
+    definition: >-
+      Statistical technique that removes regular seasonal patterns from data
+      to reveal underlying trends. Many BLS series are available in both
+      seasonally adjusted (SA) and not seasonally adjusted (NSA) versions.
+
+  - term: Consumer Price Index (CPI)
+    abbreviation: CPI
+    definition: >-
+      A measure of the average change over time in the prices paid by urban
+      consumers for a market basket of goods and services. The CPI-U covers
+      all urban consumers; CPI-W covers urban wage earners and clerical workers.
+    survey: Consumer Price Index - All Urban Consumers (CU)
+
+  - term: Current Population Survey (CPS)
+    abbreviation: CPS
+    definition: >-
+      A monthly survey of households conducted by the Census Bureau for the BLS.
+      The CPS is the primary source of US labor force statistics including the
+      national unemployment rate, employment levels, and demographic breakdowns.
+    survey: Current Population Survey (LN)
+
+  - term: Current Employment Statistics (CES)
+    abbreviation: CES
+    definition: >-
+      A monthly survey of payroll records that provides employment, hours, and
+      earnings data for workers on nonfarm payrolls. Also known as the
+      establishment survey or payroll survey.
+    survey: Current Employment Statistics (CE)
+
+  - term: Occupational Employment and Wage Statistics (OEWS)
+    abbreviation: OEWS
+    definition: >-
+      An annual survey providing employment and wage estimates for over 800
+      occupations across all industries and geographic areas. Formerly called
+      Occupational Employment Statistics (OES).
+    survey: Occupational Employment and Wage Statistics (OE)
+
+  - term: Producer Price Index (PPI)
+    abbreviation: PPI
+    definition: >-
+      A family of indexes that measure average changes over time in selling
+      prices received by domestic producers for their output. PPI measures
+      price changes from the producer/seller perspective.
+    survey: Producer Price Indexes (PC)
+
+  - term: Unemployment Rate
+    definition: >-
+      The percentage of the labor force that is jobless, looking for jobs, and
+      available for work. Persons are classified as unemployed if they don't
+      have a job, have actively looked for work in the prior 4 weeks, and are
+      currently available for work.
+
+  - term: Labor Force
+    definition: >-
+      The sum of employed and unemployed persons. The labor force participation
+      rate is the labor force as a percent of the civilian noninstitutional
+      population.
+
+  - term: Nonfarm Payroll Employment
+    definition: >-
+      The total number of US workers in any business, excluding farm workers,
+      private household employees, proprietors, and nonprofit organization
+      employees. A key indicator of economic health reported monthly.
+
+  - term: Job Openings and Labor Turnover Survey (JOLTS)
+    abbreviation: JOLTS
+    definition: >-
+      A monthly survey that provides data on job openings, hires, and
+      separations (quits, layoffs, and discharges) to measure labor
+      demand and workforce flows.
+    survey: Job Openings and Labor Turnover Survey (JT)
+
+  - term: Registration Key
+    definition: >-
+      A free API key obtained by registering at the BLS data registration
+      portal. Required for v2 API access, which provides higher query limits
+      (500 daily queries, 50 series per request, 20 years of data).
+
+  - term: Period Code
+    definition: >-
+      A code indicating the time period of a data observation. Monthly
+      periods are coded M01-M12, with M13 representing an annual average.
+      Quarterly periods use Q01-Q04. Annual data uses A01.
+
+  - term: Preliminary Data
+    definition: >-
+      BLS data marked with footnote code 'P' indicating the value may be
+      revised in subsequent releases as additional data becomes available.
+
+  - term: Benchmark Revision
+    definition: >-
+      A periodic comprehensive revision of BLS estimates that incorporate
+      more complete data sources, revised seasonal adjustment factors, and
+      updated methodologies. Typically occurs annually for the CES survey.
+
+  - term: NAICS
+    abbreviation: NAICS
+    definition: >-
+      North American Industry Classification System. The standard used by
+      Federal statistical agencies for classifying business establishments
+      for the purpose of collecting, analyzing, and publishing statistical
+      data related to the US business economy.
+
+  - term: SOC
+    abbreviation: SOC
+    definition: >-
+      Standard Occupational Classification system. Used by federal statistical
+      agencies to classify workers into occupational categories for collecting,
+      calculating, and disseminating data including BLS wage and employment data.
+
+surveys:
+  - abbreviation: AP
+    name: Average Price Data
+    description: Monthly average retail food and fuel prices in US cities
+  - abbreviation: BD
+    name: Business Employment Dynamics
+    description: Quarterly job gains and losses from establishment births, deaths, expansions, contractions
+  - abbreviation: CE
+    name: Current Employment Statistics
+    description: Monthly payroll survey covering employment, hours, and earnings
+  - abbreviation: CU
+    name: Consumer Price Index - All Urban Consumers
+    description: Monthly price index for all urban consumers (CPI-U)
+  - abbreviation: CW
+    name: Consumer Price Index - Urban Wage Earners
+    description: Monthly price index for urban wage earners (CPI-W)
+  - abbreviation: EN
+    name: Employment Cost Index
+    description: Quarterly employment cost index covering wages, salaries, and benefits
+  - abbreviation: IP
+    name: Industrial Production and Capacity Utilization
+    description: Monthly industrial production and capacity utilization
+  - abbreviation: JT
+    name: Job Openings and Labor Turnover Survey
+    description: Monthly job openings, hires, and separations
+  - abbreviation: LN
+    name: Current Population Survey
+    description: Monthly household survey providing unemployment and labor force data
+  - abbreviation: OE
+    name: Occupational Employment and Wage Statistics
+    description: Annual occupational employment and wage estimates
+  - abbreviation: PC
+    name: Producer Price Indexes
+    description: Monthly price changes from the producer perspective
+  - abbreviation: PR
+    name: Major Sector Productivity and Costs
+    description: Quarterly labor productivity and costs by sector
+  - abbreviation: SM
+    name: State and Metro Area Employment, Hours, and Earnings
+    description: Monthly state and metropolitan area employment statistics

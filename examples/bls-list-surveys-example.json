@@ -1,0 +1,102 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.bls.gov/publicAPI/v2/surveys?registrationkey=YOUR_API_KEY",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "status": "REQUEST_SUCCEEDED",
+      "responseTime": 45,
+      "message": [],
+      "Results": {
+        "survey": [
+          {
+            "survey_abbreviation": "AP",
+            "survey_name": "Average Price Data"
+          },
+          {
+            "survey_abbreviation": "BD",
+            "survey_name": "Business Employment Dynamics"
+          },
+          {
+            "survey_abbreviation": "CE",
+            "survey_name": "Current Employment Statistics"
+          },
+          {
+            "survey_abbreviation": "CU",
+            "survey_name": "Consumer Price Index - All Urban Consumers"
+          },
+          {
+            "survey_abbreviation": "CW",
+            "survey_name": "Consumer Price Index - Urban Wage Earners and Clerical Workers"
+          },
+          {
+            "survey_abbreviation": "EE",
+            "survey_name": "Quarterly Census of Employment and Wages"
+          },
+          {
+            "survey_abbreviation": "EN",
+            "survey_name": "Employment Cost Index - Wages and Salaries"
+          },
+          {
+            "survey_abbreviation": "FW",
+            "survey_name": "Covered Employment and Wages"
+          },
+          {
+            "survey_abbreviation": "IP",
+            "survey_name": "Industrial Production and Capacity Utilization"
+          },
+          {
+            "survey_abbreviation": "JT",
+            "survey_name": "Job Openings and Labor Turnover Survey"
+          },
+          {
+            "survey_abbreviation": "LN",
+            "survey_name": "Current Population Survey"
+          },
+          {
+            "survey_abbreviation": "LU",
+            "survey_name": "Unemployment Insurance Weekly Claims Data"
+          },
+          {
+            "survey_abbreviation": "MU",
+            "survey_name": "Multifactor Productivity"
+          },
+          {
+            "survey_abbreviation": "NW",
+            "survey_name": "National Employment, Hours, and Earnings"
+          },
+          {
+            "survey_abbreviation": "OE",
+            "survey_name": "Occupational Employment and Wage Statistics"
+          },
+          {
+            "survey_abbreviation": "PC",
+            "survey_name": "Producer Price Indexes"
+          },
+          {
+            "survey_abbreviation": "PD",
+            "survey_name": "U.S. Import/Export Price Indexes"
+          },
+          {
+            "survey_abbreviation": "PR",
+            "survey_name": "Major Sector Productivity and Costs"
+          },
+          {
+            "survey_abbreviation": "SM",
+            "survey_name": "State and Metro Area Employment, Hours, and Earnings"
+          },
+          {
+            "survey_abbreviation": "WD",
+            "survey_name": "Weekly and Hourly Earnings Data"
+          }
+        ]
+      }
+    }
+  }
+}

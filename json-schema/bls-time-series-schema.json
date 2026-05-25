@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/bls-gov/main/json-schema/bls-time-series-schema.json",
+  "title": "BLS Time Series",
+  "description": "JSON Schema for a Bureau of Labor Statistics time series response, representing historical data points for a statistical series such as unemployment rate, CPI, or wage data.",
+  "type": "object",
+  "properties": {
+    "seriesID": {
+      "type": "string",
+      "description": "The unique BLS series identifier",
+      "pattern": "^[A-Z]{2,4}[0-9A-Z]{6,18}$",
+      "examples": ["LNS14000000", "CUUR0000SA0", "CES0000000001"]
+    },
+    "catalog": {
+      "$ref": "#/$defs/SeriesCatalog"
+    },
+    "data": {
+      "type": "array",
+      "description": "Array of data observations for this series",
+      "items": {
+        "$ref": "#/$defs/DataPoint"
+      }
+    },
+    "calculations": {
+      "$ref": "#/$defs/Calculations"
+    }
+  },
+  "required": ["seriesID", "data"],
+  "$defs": {
+    "SeriesCatalog": {
+      "title": "Series Catalog",
+      "description": "Descriptive metadata for a BLS series (returned when catalog=true in v2 requests)",
+      "type": "object",
+      "properties": {
+        "series_title": {
+          "type": "string",
+          "description": "Human-readable title of the series",
+          "examples": ["Unemployment Rate", "All items in U.S. city average, all urban consumers"]
+        },
+        "series_id": {
+          "type": "string",
+          "description": "The series identifier"
+        },
+        "seasonality": {
+          "type": "string",
+          "description": "Whether data is seasonally adjusted or not",
+          "enum": ["Seasonally Adjusted", "Not Seasonally Adjusted", ""]
+        },
+        "survey_name": {
+          "type": "string",
+          "description": "Full name of the BLS survey program",
+          "examples": ["Current Population Survey", "Consumer Price Index - All Urban Consumers"]
+        },
+        "survey_abbreviation": {
+          "type": "string",
+          "description": "Two-letter abbreviation for the survey",
+          "examples": ["LN", "CU", "CE", "OE"]
+        },
+        "measure_data_type": {
+          "type": "string",
+          "description": "The type of measurement for this series",
+          "examples": ["Percent", "Index", "Number in Thousands", "Dollars"]
+        },
+        "commerce_industry": {
+          "type": "string",
+          "description": "Industry classification if applicable"
+        },
+        "occupation": {
+          "type": "string",
+          "description": "Occupation classification if applicable"
+        },
+        "area": {
+          "type": "string",
+          "description": "Geographic area for the data"
+        },
+        "footnote_codes": {
+          "type": "string",
+          "description": "Applicable footnote codes"
+        },
+        "begin_year": {
+          "type": "string",
+          "description": "First year of available data"
+        },
+        "begin_period": {
+          "type": "string",
+          "description": "First period of available data"
+        },
+        "end_year": {
+          "type": "string",
+          "description": "Most recent year of available data"
+        },
+        "end_period": {
+          "type": "string",
+          "description": "Most recent period of available data"
+        }
+      },
+      "required": ["series_title", "survey_name"]
+    },
+    "DataPoint": {
+      "title": "Data Point",
+      "description": "A single observation in a BLS time series",
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "string",
+          "pattern": "^\\d{4}$",
+          "description": "4-digit year of the observation",
+          "examples": ["2024", "2023", "2022"]
+        },
+        "period": {
+          "type": "string",
+          "pattern": "^(M(0[1-9]|1[0-3])|Q0[1-4]|A01|S0[12])$",
+          "description": "Period code: M01-M12 (monthly), M13 (annual avg), Q01-Q04 (quarterly), A01 (annual), S01-S02 (semi-annual)",
+          "examples": ["M01", "M12", "Q01", "A01"]
+        },
+        "periodName": {
+          "type": "string",
+          "description": "Human-readable period name",
+          "examples": ["January", "December", "1st Quarter", "Annual"]
+        },
+        "latest": {
+          "type": "string",
+          "enum": ["true", "false"],
+          "description": "Whether this is the most recent data point"
+        },
+        "value": {
+          "type": "string",
+          "description": "The statistical value for this observation",
+          "examples": ["3.7", "314.175", "158526"]
+        },
+        "footnotes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Footnote"
+          }
+        },
+        "calculations": {
+          "$ref": "#/$defs/Calculations"
+        },
+        "aspects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": ["year", "period", "value"]
+    },
+    "Footnote": {
+      "title": "Footnote",
+      "description": "A footnote annotation for a data point",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Single-letter footnote code",
+          "examples": ["P", "R"]
+        },
+        "text": {
+          "type": "string",
+          "description": "Footnote description",
+          "examples": ["Preliminary", "Revised"]
+        }
+      }
+    },
+    "Calculations": {
+      "title": "Calculations",
+      "description": "Statistical calculations for a series or data point (v2 API only)",
+      "type": "object",
+      "properties": {
+        "net_changes": {
+          "type": "object",
+          "description": "Net change values by time period",
+          "properties": {
+            "1": {
+              "type": "string",
+              "description": "1-month net change"
+            },
+            "3": {
+              "type": "string",
+              "description": "3-month net change"
+            },
+            "6": {
+              "type": "string",
+              "description": "6-month net change"
+            },
+            "12": {
+              "type": "string",
+              "description": "12-month net change"
+            }
+          }
+        },
+        "pct_changes": {
+          "type": "object",
+          "description": "Percent change values by time period",
+          "properties": {
+            "1": {
+              "type": "string",
+              "description": "1-month percent change"
+            },
+            "3": {
+              "type": "string",
+              "description": "3-month percent change"
+            },
+            "6": {
+              "type": "string",
+              "description": "6-month percent change"
+            },
+            "12": {
+              "type": "string",
+              "description": "12-month (year-over-year) percent change"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "name": "BLS Time Series Response",
+  "description": "The structure of a BLS Public Data API time series response, showing the hierarchy from the top-level status envelope to individual data points",
+  "fields": [
+    {
+      "name": "status",
+      "type": "string",
+      "description": "Overall request status: REQUEST_SUCCEEDED, REQUEST_FAILED_ERROR, or REQUEST_NOT_PROCESSED",
+      "required": true
+    },
+    {
+      "name": "responseTime",
+      "type": "integer",
+      "description": "Server processing time in milliseconds",
+      "required": true
+    },
+    {
+      "name": "message",
+      "type": "array",
+      "description": "Array of informational or error messages",
+      "required": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "Results",
+      "type": "object",
+      "description": "Container for query results",
+      "required": true,
+      "fields": [
+        {
+          "name": "series",
+          "type": "array",
+          "description": "Array of series results, one per requested series ID",
+          "required": true,
+          "items": {
+            "name": "SeriesResult",
+            "type": "object",
+            "fields": [
+              {
+                "name": "seriesID",
+                "type": "string",
+                "description": "The BLS series identifier (e.g., LNS14000000)",
+                "required": true
+              },
+              {
+                "name": "catalog",
+                "type": "object",
+                "description": "Descriptive metadata for the series (present when catalog=true in v2 requests)",
+                "required": false,
+                "fields": [
+                  {
+                    "name": "series_title",
+                    "type": "string",
+                    "description": "Human-readable series title",
+                    "required": true
+                  },
+                  {
+                    "name": "survey_name",
+                    "type": "string",
+                    "description": "BLS survey program name",
+                    "required": true
+                  },
+                  {
+                    "name": "seasonality",
+                    "type": "string",
+                    "description": "Seasonal adjustment status",
+                    "required": false
+                  },
+                  {
+                    "name": "measure_data_type",
+                    "type": "string",
+                    "description": "Measurement type (Percent, Index, etc.)",
+                    "required": false
+                  },
+                  {
+                    "name": "area",
+                    "type": "string",
+                    "description": "Geographic area of coverage",
+                    "required": false
+                  },
+                  {
+                    "name": "begin_year",
+                    "type": "string",
+                    "description": "First year of available data",
+                    "required": false
+                  },
+                  {
+                    "name": "end_year",
+                    "type": "string",
+                    "description": "Most recent year of available data",
+                    "required": false
+                  }
+                ]
+              },
+              {
+                "name": "data",
+                "type": "array",
+                "description": "Array of data observations",
+                "required": true,
+                "items": {
+                  "name": "DataPoint",
+                  "type": "object",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "type": "string",
+                      "description": "4-digit observation year",
+                      "required": true
+                    },
+                    {
+                      "name": "period",
+                      "type": "string",
+                      "description": "Period code (M01-M13, Q01-Q04, A01)",
+                      "required": true
+                    },
+                    {
+                      "name": "periodName",
+                      "type": "string",
+                      "description": "Human-readable period name",
+                      "required": true
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "description": "Statistical value as string",
+                      "required": true
+                    },
+                    {
+                      "name": "footnotes",
+                      "type": "array",
+                      "description": "Data quality footnotes",
+                      "required": false,
+                      "items": {
+                        "name": "Footnote",
+                        "type": "object",
+                        "fields": [
+                          {
+                            "name": "code",
+                            "type": "string",
+                            "description": "Single-letter footnote code"
+                          },
+                          {
+                            "name": "text",
+                            "type": "string",
+                            "description": "Footnote description text"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "calculations",
+                      "type": "object",
+                      "description": "Statistical calculations (v2 only)",
+                      "required": false,
+                      "fields": [
+                        {
+                          "name": "net_changes",
+                          "type": "object",
+                          "description": "Net change values by lag period (1, 3, 6, 12 months)"
+                        },
+                        {
+                          "name": "pct_changes",
+                          "type": "object",
+                          "description": "Percent change values by lag period (1, 3, 6, 12 months)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: BLS Public Data API — Surveys
+  description: 'BLS Public Data API — Surveys. 2 operations. Lead operation: List All BLS Surveys. Self-contained Naftiko
+    capability covering one Bureau of Labor Statistics business surface.'
+  tags:
+  - Bureau of Labor Statistics
+  - Surveys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    US_BUREAU_OF_LABOR_STATISTICS_API_KEY: US_BUREAU_OF_LABOR_STATISTICS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bls-public-data-surveys
+    baseUri: https://api.bls.gov/publicAPI/v2
+    description: BLS Public Data API — Surveys business capability. Self-contained, no shared references.
+    resources:
+    - name: surveys
+      path: /surveys
+      operations:
+      - name: listsurveys
+        method: GET
+        description: List All BLS Surveys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: registrationkey
+          in: query
+          type: string
+          description: Your registered BLS API key
+    - name: surveys-surveyAbbreviation
+      path: /surveys/{surveyAbbreviation}
+      operations:
+      - name: getsurveydetails
+        method: GET
+        description: Get Survey Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: surveyAbbreviation
+          in: path
+          type: string
+          description: The BLS survey abbreviation code (e.g., CU, LN, CE)
+          required: true
+        - name: registrationkey
+          in: query
+          type: string
+          description: Your registered BLS API key
+    authentication:
+      type: apikey
+      key: registrationkey
+      value: '{{env.US_BUREAU_OF_LABOR_STATISTICS_API_KEY}}'
+      placement: query
+  exposes:
+  - type: rest
+    namespace: bls-public-data-surveys-rest
+    port: 8080
+    description: REST adapter for BLS Public Data API — Surveys. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/surveys
+      name: surveys
+      description: REST surface for surveys.
+      operations:
+      - method: GET
+        name: listsurveys
+        description: List All BLS Surveys
+        call: bls-public-data-surveys.listsurveys
+        with:
+          registrationkey: rest.registrationkey
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/surveys/{surveyabbreviation}
+      name: surveys-surveyabbreviation
+      description: REST surface for surveys-surveyAbbreviation.
+      operations:
+      - method: GET
+        name: getsurveydetails
+        description: Get Survey Details
+        call: bls-public-data-surveys.getsurveydetails
+        with:
+          surveyAbbreviation: rest.surveyAbbreviation
+          registrationkey: rest.registrationkey
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bls-public-data-surveys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for BLS Public Data API — Surveys. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-all-bls-surveys
+      description: List All BLS Surveys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bls-public-data-surveys.listsurveys
+      with:
+        registrationkey: tools.registrationkey
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-survey-details
+      description: Get Survey Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bls-public-data-surveys.getsurveydetails
+      with:
+        surveyAbbreviation: tools.surveyAbbreviation
+        registrationkey: tools.registrationkey
+      outputParameters:
+      - type: object
+        mapping: $.
