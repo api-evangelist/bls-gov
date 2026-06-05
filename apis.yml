@@ -1,19 +1,15 @@
 aid: bls-gov
 name: Bureau of Labor Statistics
 description: >-
-  The U.S. Bureau of Labor Statistics (BLS) is the principal federal statistical
-  agency responsible for measuring labor market activity, working conditions,
-  price changes, and productivity in the U.S. economy. BLS operates the Public
-  Data API at api.bls.gov, providing programmatic JSON access to published
-  historical time series across more than 75 surveys — including the Consumer
-  Price Index (CPI), Producer Price Index (PPI), Employment Situation (CES),
-  Local Area Unemployment Statistics (LAUS), Quarterly Census of Employment and
-  Wages (QCEW), Occupational Employment and Wage Statistics (OEWS), Employment
-  Cost Index (ECI), Productivity, Import/Export Price Indexes, and Census of
-  Fatal Occupational Injuries (CFOI). Version 1 is open without registration;
-  Version 2 requires a free registration key and provides higher daily limits,
-  more series per request, longer year ranges, catalog metadata, statistical
-  calculations, and annual averages.
+  The U.S. Bureau of Labor Statistics (BLS) is the principal federal statistical agency responsible for measuring labor
+  market activity, working conditions, price changes, and productivity in the U.S. economy. BLS operates the Public Data
+  API at api.bls.gov, providing programmatic JSON access to published historical time series across more than 75 surveys
+  — including the Consumer Price Index (CPI), Producer Price Index (PPI), Employment Situation (CES), Local Area
+  Unemployment Statistics (LAUS), Quarterly Census of Employment and Wages (QCEW), Occupational Employment and Wage
+  Statistics (OEWS), Employment Cost Index (ECI), Productivity, Import/Export Price Indexes, and Census of Fatal
+  Occupational Injuries (CFOI). Version 1 is open without registration; Version 2 requires a free registration key and
+  provides higher daily limits, more series per request, longer year ranges, catalog metadata, statistical calculations,
+  and annual averages.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -38,16 +34,13 @@ apis:
   - aid: bls-gov:bls-public-data-api
     name: BLS Public Data API
     description: >-
-      The BLS Public Data API is the agency's public REST + JSON service for
-      retrieving published historical time series across every BLS program.
-      v1 is open and unauthenticated with smaller daily limits and per-request
-      caps; v2 requires a free registration key and unlocks 500 queries per day,
-      up to 50 series per request, up to 20 years per query, optional catalog
-      metadata, net/percent-change calculations, and annual averages. All
-      requests return a uniform JSON envelope with status, responseTime, and
-      Results.series, where each series carries data points keyed by year and
-      period (M01–M12 for monthly, Q01–Q04 for quarterly, S01–S03 for semi
-      annual, A01 for annual, M13 for annual averages).
+      The BLS Public Data API is the agency's public REST + JSON service for retrieving published historical time series
+      across every BLS program. v1 is open and unauthenticated with smaller daily limits and per-request caps; v2
+      requires a free registration key and unlocks 500 queries per day, up to 50 series per request, up to 20 years per
+      query, optional catalog metadata, net/percent-change calculations, and annual averages. All requests return a
+      uniform JSON envelope with status, responseTime, and Results.series, where each series carries data points keyed
+      by year and period (M01–M12 for monthly, Q01–Q04 for quarterly, S01–S03 for semi annual, A01 for annual, M13 for
+      annual averages).
     humanURL: https://www.bls.gov/developers/home.htm
     baseURL: https://api.bls.gov/publicAPI/v2
     tags:
@@ -73,21 +66,18 @@ apis:
       - type: SignatureExamples
         url: https://www.bls.gov/developers/api_sample_code.htm
       - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/openapi/bls-public-data-api-openapi.yml
+        url: >-
+          https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/openapi/bls-public-data-api-openapi.yml
       - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
+        url: >-
+          https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
       - type: JSONStructure
-        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
+        url: >-
+          https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
       - type: JSONLD
         url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld
       - type: SpectralRuleset
         url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml
-      - type: NaftikoCapability
-        url: capabilities/bls-public-data-time-series.yaml
-      - type: NaftikoCapability
-        url: capabilities/bls-public-data-popular-series.yaml
-      - type: NaftikoCapability
-        url: capabilities/bls-public-data-surveys.yaml
       - type: DataAPI
         url: https://api.bls.gov/publicAPI/v2/timeseries/data/
       - type: DataAPI
@@ -135,7 +125,9 @@ useCases:
   - name: Inflation Monitoring
     description: Track CPI-U, CPI-W, Chained CPI, and PPI series for inflation dashboards and forecasting.
   - name: Labor Market Analysis
-    description: Pull unemployment rate, labor force participation, payroll employment, and JOLTS series to monitor the labor market.
+    description: >-
+      Pull unemployment rate, labor force participation, payroll employment, and JOLTS series to monitor the labor
+      market.
   - name: Wage & Compensation Benchmarking
     description: Use OEWS, ECI, and ECEC series for occupational wage and total compensation benchmarking.
   - name: Regional Economic Dashboards
