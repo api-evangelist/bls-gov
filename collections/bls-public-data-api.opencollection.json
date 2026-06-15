@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BLS Public Data API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Time Series",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Multiple Time Series Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve time series data for one or more BLS series IDs. Version 2 supports up to 50 series per request, date range filtering, optional calculations (net change, percent change), annual averages, and catalog descriptions. Requires a registered API key in the request body."
+        },
+        {
+          "info": {
+            "name": "Get Single Time Series Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/:seriesId",
+            "params": [
+              {
+                "name": "seriesId",
+                "value": "LNS14000000",
+                "type": "path",
+                "description": "The BLS series identifier (e.g., LNS14000000 for national unemployment rate, CUUR0000SA0 for CPI-U All Items)"
+              },
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key (required for v2 higher limits)"
+              },
+              {
+                "name": "startyear",
+                "value": "2020",
+                "type": "query",
+                "description": "Beginning year for data range (4-digit year)"
+              },
+              {
+                "name": "endyear",
+                "value": "2024",
+                "type": "query",
+                "description": "Ending year for data range (4-digit year)"
+              },
+              {
+                "name": "catalog",
+                "value": "",
+                "type": "query",
+                "description": "Include series catalog/description information in response (v2 only)"
+              },
+              {
+                "name": "calculations",
+                "value": "",
+                "type": "query",
+                "description": "Include net change and percent change calculations (v2 only)"
+              },
+              {
+                "name": "annualaverage",
+                "value": "",
+                "type": "query",
+                "description": "Include annual average values (v2 only)"
+              }
+            ]
+          },
+          "docs": "Retrieve time series data for a single BLS series ID using a GET request. This endpoint works with both v1 and v2. For v2, include the registration key as a query parameter for higher limits."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All BLS Surveys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/surveys",
+            "params": [
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key"
+              }
+            ]
+          },
+          "docs": "Returns a list of all BLS surveys with their abbreviations, names, and metadata. Use this endpoint to discover available survey types and their associated series prefixes."
+        },
+        {
+          "info": {
+            "name": "Get Survey Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/surveys/:surveyAbbreviation",
+            "params": [
+              {
+                "name": "surveyAbbreviation",
+                "value": "CU",
+                "type": "path",
+                "description": "The BLS survey abbreviation code (e.g., CU, LN, CE)"
+              },
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key"
+              }
+            ]
+          },
+          "docs": "Returns metadata and information for a specific BLS survey identified by its abbreviation code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Popular Series",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Popular BLS Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/timeseries/popular",
+            "params": [
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key"
+              },
+              {
+                "name": "survey",
+                "value": "CU",
+                "type": "query",
+                "description": "Filter popular series by survey abbreviation"
+              }
+            ]
+          },
+          "docs": "Returns a list of the 25 most popular BLS series IDs across all surveys. Useful for discovering commonly referenced economic indicators."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
