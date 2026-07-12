@@ -158,6 +158,10 @@ integrations:
     description: BLS QCEW and OEWS data align with Census Bureau geographic and industry classifications (NAICS, SOC).
     url: https://www.census.gov/
 common:
+  - type: DomainSecurity
+    url: security/bls-gov-domain-security.yml
+  - type: Authentication
+    url: authentication/bls-gov-authentication.yml
   - type: Website
     url: https://www.bls.gov/
   - type: Developer
