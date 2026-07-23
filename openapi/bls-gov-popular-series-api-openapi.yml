@@ -1,0 +1,138 @@
+openapi: 3.1.0
+info:
+  title: BLS Public Data Popular Series API
+  description: 'The Bureau of Labor Statistics (BLS) Public Data API allows developers to retrieve published historical time series data from all BLS surveys. Version 2 requires a free API registration key and provides higher query limits: up to 500 daily queries, 50 series per request, and 20 years of data. The API covers Consumer Price Index (CPI), employment and unemployment statistics, wages, productivity, industry employment, and occupational statistics.'
+  version: '2.0'
+  contact:
+    name: BLS Developer Support
+    url: https://www.bls.gov/developers/home.htm
+    email: data_staff@bls.gov
+  termsOfService: https://www.bls.gov/developers/termsOfService.htm
+  license:
+    name: Public Domain
+    url: https://www.bls.gov/developers/termsOfService.htm
+servers:
+- url: https://api.bls.gov/publicAPI/v2
+  description: BLS Public Data API v2 (requires registration key)
+- url: https://api.bls.gov/publicAPI/v1
+  description: BLS Public Data API v1 (no registration required)
+tags:
+- name: Popular Series
+  description: Retrieve the most popular BLS series identifiers
+paths:
+  /timeseries/popular:
+    get:
+      operationId: getPopularSeries
+      summary: Get Popular BLS Series
+      description: Returns a list of the 25 most popular BLS series IDs across all surveys. Useful for discovering commonly referenced economic indicators.
+      tags:
+      - Popular Series
+      parameters:
+      - name: registrationkey
+        in: query
+        required: false
+        description: Your registered BLS API key
+        schema:
+          type: string
+      - name: survey
+        in: query
+        required: false
+        description: Filter popular series by survey abbreviation
+        schema:
+          type: string
+        example: CU
+      responses:
+        '200':
+          description: List of popular series IDs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PopularSeriesResponse'
+              example:
+                status: REQUEST_SUCCEEDED
+                responseTime: 30
+                message: []
+                Results:
+                  series:
+                  - seriesID: LNS14000000
+                    catalog:
+                      series_title: Unemployment Rate
+                      survey_name: Current Population Survey
+                  - seriesID: CUUR0000SA0
+                    catalog:
+                      series_title: All items in U.S. city average, all urban consumers
+                      survey_name: Consumer Price Index - All Urban Consumers
+components:
+  schemas:
+    PopularSeries:
+      type: object
+      properties:
+        seriesID:
+          type: string
+          description: The BLS series identifier
+          example: LNS14000000
+        catalog:
+          $ref: '#/components/schemas/SeriesCatalog'
+    PopularSeriesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                $ref: '#/components/schemas/PopularSeries'
+    SeriesCatalog:
+      type: object
+      description: Metadata description of a BLS series (v2 only)
+      properties:
+        series_title:
+          type: string
+          description: Human-readable title of the series
+          example: Unemployment Rate
+        series_id:
+          type: string
+          description: The series identifier
+        seasonality:
+          type: string
+          description: Whether data is seasonally adjusted
+          example: Seasonally Adjusted
+        survey_name:
+          type: string
+          description: Name of the BLS survey program
+          example: Current Population Survey
+        survey_abbreviation:
+          type: string
+          description: Abbreviated survey code
+          example: LN
+        measure_data_type:
+          type: string
+          description: Type of measurement
+          example: Percent
+        commerce_industry:
+          type: string
+          description: Industry classification if applicable
+        occupation:
+          type: string
+          description: Occupation if applicable
+        area:
+          type: string
+          description: Geographic area
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: query
+      name: registrationkey
+      description: Free API registration key from https://data.bls.gov/registrationEngine/. Required for v2 API access with higher rate limits.
+externalDocs:
+  description: BLS Developers Home
+  url: https://www.bls.gov/developers/home.htm

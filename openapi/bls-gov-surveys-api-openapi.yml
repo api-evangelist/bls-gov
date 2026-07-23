@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: BLS Public Data Popular Series Surveys API
+  description: 'The Bureau of Labor Statistics (BLS) Public Data API allows developers to retrieve published historical time series data from all BLS surveys. Version 2 requires a free API registration key and provides higher query limits: up to 500 daily queries, 50 series per request, and 20 years of data. The API covers Consumer Price Index (CPI), employment and unemployment statistics, wages, productivity, industry employment, and occupational statistics.'
+  version: '2.0'
+  contact:
+    name: BLS Developer Support
+    url: https://www.bls.gov/developers/home.htm
+    email: data_staff@bls.gov
+  termsOfService: https://www.bls.gov/developers/termsOfService.htm
+  license:
+    name: Public Domain
+    url: https://www.bls.gov/developers/termsOfService.htm
+servers:
+- url: https://api.bls.gov/publicAPI/v2
+  description: BLS Public Data API v2 (requires registration key)
+- url: https://api.bls.gov/publicAPI/v1
+  description: BLS Public Data API v1 (no registration required)
+tags:
+- name: Surveys
+  description: Discover and list available BLS surveys
+paths:
+  /surveys:
+    get:
+      operationId: listSurveys
+      summary: List All BLS Surveys
+      description: Returns a list of all BLS surveys with their abbreviations, names, and metadata. Use this endpoint to discover available survey types and their associated series prefixes.
+      tags:
+      - Surveys
+      parameters:
+      - name: registrationkey
+        in: query
+        required: false
+        description: Your registered BLS API key
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of all available BLS surveys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveysResponse'
+              example:
+                status: REQUEST_SUCCEEDED
+                responseTime: 45
+                message: []
+                Results:
+                  survey:
+                  - survey_abbreviation: CU
+                    survey_name: Consumer Price Index - All Urban Consumers
+                  - survey_abbreviation: LN
+                    survey_name: Current Population Survey
+                  - survey_abbreviation: CE
+                    survey_name: Current Employment Statistics
+                  - survey_abbreviation: OE
+                    survey_name: Occupational Employment and Wage Statistics
+  /surveys/{surveyAbbreviation}:
+    get:
+      operationId: getSurveyDetails
+      summary: Get Survey Details
+      description: Returns metadata and information for a specific BLS survey identified by its abbreviation code.
+      tags:
+      - Surveys
+      parameters:
+      - name: surveyAbbreviation
+        in: path
+        required: true
+        description: The BLS survey abbreviation code (e.g., CU, LN, CE)
+        schema:
+          type: string
+        example: CU
+      - name: registrationkey
+        in: query
+        required: false
+        description: Your registered BLS API key
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Survey details response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyDetailResponse'
+        '404':
+          description: Survey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SurveysResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/Survey'
+    SurveyDetail:
+      type: object
+      properties:
+        survey_abbreviation:
+          type: string
+        survey_name:
+          type: string
+        popular_series:
+          type: array
+          items:
+            type: object
+            properties:
+              seriesID:
+                type: string
+              series_title:
+                type: string
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - REQUEST_FAILED_ERROR
+          - REQUEST_NOT_PROCESSED
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+          description: Error message details
+        Results:
+          type: object
+          description: Empty results object
+    SurveyDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/SurveyDetail'
+    Survey:
+      type: object
+      properties:
+        survey_abbreviation:
+          type: string
+          description: Two-letter survey abbreviation code
+          example: CU
+        survey_name:
+          type: string
+          description: Full name of the BLS survey program
+          example: Consumer Price Index - All Urban Consumers
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: query
+      name: registrationkey
+      description: Free API registration key from https://data.bls.gov/registrationEngine/. Required for v2 API access with higher rate limits.
+externalDocs:
+  description: BLS Developers Home
+  url: https://www.bls.gov/developers/home.htm
