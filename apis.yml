@@ -11,9 +11,22 @@ description: >-
   provides higher daily limits, more series per request, longer year ranges, catalog metadata, statistical calculations,
   and annual averages.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: open
+  trial: false
+  try_now: true
+  public: true
+  label: Freemium · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bls-gov.png
 tags:
   - Federal Government
   - Labor Statistics
@@ -31,75 +44,162 @@ modified: '2026-05-25'
 url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: bls-gov:bls-public-data-api
-    name: BLS Public Data API
-    description: >-
-      The BLS Public Data API is the agency's public REST + JSON service for retrieving published historical time series
-      across every BLS program. v1 is open and unauthenticated with smaller daily limits and per-request caps; v2
-      requires a free registration key and unlocks 500 queries per day, up to 50 series per request, up to 20 years per
-      query, optional catalog metadata, net/percent-change calculations, and annual averages. All requests return a
-      uniform JSON envelope with status, responseTime, and Results.series, where each series carries data points keyed
-      by year and period (M01–M12 for monthly, Q01–Q04 for quarterly, S01–S03 for semi annual, A01 for annual, M13 for
-      annual averages).
-    humanURL: https://www.bls.gov/developers/home.htm
-    baseURL: https://api.bls.gov/publicAPI/v2
-    tags:
-      - Labor Statistics
-      - Employment
-      - Unemployment
-      - Consumer Price Index
-      - Producer Price Index
-      - Economic Data
-      - Time Series
-      - Open Data
-    properties:
-      - type: Documentation
-        url: https://www.bls.gov/developers/home.htm
-      - type: Documentation
-        url: https://www.bls.gov/developers/api_signature_v2.htm
-      - type: GettingStarted
-        url: https://www.bls.gov/developers/api_FAQs.htm
-      - type: Registration
-        url: https://data.bls.gov/registrationEngine/
-      - type: TermsOfService
-        url: https://www.bls.gov/developers/termsOfService.htm
-      - type: SignatureExamples
-        url: https://www.bls.gov/developers/api_sample_code.htm
-      - type: OpenAPI
-        url: >-
-          https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/openapi/bls-public-data-api-openapi.yml
-      - type: JSONSchema
-        url: >-
-          https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
-      - type: JSONStructure
-        url: >-
-          https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
-      - type: JSONLD
-        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld
-      - type: SpectralRuleset
-        url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml
-      - type: DataAPI
-        url: https://api.bls.gov/publicAPI/v2/timeseries/data/
-      - type: DataAPI
-        url: https://api.bls.gov/publicAPI/v2/surveys
-      - type: DataAPI
-        url: https://api.bls.gov/publicAPI/v2/timeseries/popular
-      - type: RateLimits
-        url: rate-limits/bls-gov-rate-limits.yml
-      - type: Plans
-        url: plans/bls-gov-plans-pricing.yml
-      - type: FinOps
-        url: finops/bls-gov-finops.yml
-      - type: Examples
-        url: examples/bls-get-unemployment-rate-example.json
-      - type: Examples
-        url: examples/bls-list-surveys-example.json
-      - type: Vocabulary
-        url: vocabulary/bls-gov-vocabulary.yml
-    contact:
-      - FN: BLS Data Support
-        url: https://www.bls.gov/developers/home.htm
-        email: data_staff@bls.gov
+- aid: bls-gov:bls-gov-popular-series-api
+  name: Bureau of Labor Statistics Popular Series API
+  description: Retrieve the most popular BLS series identifiers
+  humanURL: https://www.bls.gov/developers/home.htm
+  baseURL: https://api.bls.gov/publicAPI/v2
+  tags:
+  - Popular Series
+  properties:
+  - type: OpenAPI
+    url: openapi/bls-gov-popular-series-api-openapi.yml
+  - type: Documentation
+    url: https://www.bls.gov/developers/home.htm
+  - type: Documentation
+    url: https://www.bls.gov/developers/api_signature_v2.htm
+  - type: GettingStarted
+    url: https://www.bls.gov/developers/api_FAQs.htm
+  - type: Registration
+    url: https://data.bls.gov/registrationEngine/
+  - type: TermsOfService
+    url: https://www.bls.gov/developers/termsOfService.htm
+  - type: SignatureExamples
+    url: https://www.bls.gov/developers/api_sample_code.htm
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
+  - type: JSONLD
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld
+  - type: SpectralRuleset
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/timeseries/data/
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/surveys
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/timeseries/popular
+  - type: RateLimits
+    url: rate-limits/bls-gov-rate-limits.yml
+  - type: Plans
+    url: plans/bls-gov-plans-pricing.yml
+  - type: FinOps
+    url: finops/bls-gov-finops.yml
+  - type: Examples
+    url: examples/bls-get-unemployment-rate-example.json
+  - type: Examples
+    url: examples/bls-list-surveys-example.json
+  - type: Vocabulary
+    url: vocabulary/bls-gov-vocabulary.yml
+- aid: bls-gov:bls-gov-surveys-api
+  name: Bureau of Labor Statistics Surveys API
+  description: Discover and list available BLS surveys
+  humanURL: https://www.bls.gov/developers/home.htm
+  baseURL: https://api.bls.gov/publicAPI/v2
+  tags:
+  - Surveys
+  properties:
+  - type: OpenAPI
+    url: openapi/bls-gov-surveys-api-openapi.yml
+  - type: Documentation
+    url: https://www.bls.gov/developers/home.htm
+  - type: Documentation
+    url: https://www.bls.gov/developers/api_signature_v2.htm
+  - type: GettingStarted
+    url: https://www.bls.gov/developers/api_FAQs.htm
+  - type: Registration
+    url: https://data.bls.gov/registrationEngine/
+  - type: TermsOfService
+    url: https://www.bls.gov/developers/termsOfService.htm
+  - type: SignatureExamples
+    url: https://www.bls.gov/developers/api_sample_code.htm
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
+  - type: JSONLD
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld
+  - type: SpectralRuleset
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/timeseries/data/
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/surveys
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/timeseries/popular
+  - type: RateLimits
+    url: rate-limits/bls-gov-rate-limits.yml
+  - type: Plans
+    url: plans/bls-gov-plans-pricing.yml
+  - type: FinOps
+    url: finops/bls-gov-finops.yml
+  - type: Examples
+    url: examples/bls-get-unemployment-rate-example.json
+  - type: Examples
+    url: examples/bls-list-surveys-example.json
+  - type: Vocabulary
+    url: vocabulary/bls-gov-vocabulary.yml
+- aid: bls-gov:bls-gov-time-series-api
+  name: Bureau of Labor Statistics Time Series API
+  description: Retrieve time series data for BLS statistical series
+  humanURL: https://www.bls.gov/developers/home.htm
+  baseURL: https://api.bls.gov/publicAPI/v2
+  tags:
+  - Time Series
+  properties:
+  - type: OpenAPI
+    url: openapi/bls-gov-time-series-api-openapi.yml
+  - type: Documentation
+    url: https://www.bls.gov/developers/home.htm
+  - type: Documentation
+    url: https://www.bls.gov/developers/api_signature_v2.htm
+  - type: GettingStarted
+    url: https://www.bls.gov/developers/api_FAQs.htm
+  - type: Registration
+    url: https://data.bls.gov/registrationEngine/
+  - type: TermsOfService
+    url: https://www.bls.gov/developers/termsOfService.htm
+  - type: SignatureExamples
+    url: https://www.bls.gov/developers/api_sample_code.htm
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json
+  - type: JSONLD
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld
+  - type: SpectralRuleset
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/timeseries/data/
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/surveys
+  - type: DataAPI
+    url: https://api.bls.gov/publicAPI/v2/timeseries/popular
+  - type: RateLimits
+    url: rate-limits/bls-gov-rate-limits.yml
+  - type: Plans
+    url: plans/bls-gov-plans-pricing.yml
+  - type: FinOps
+    url: finops/bls-gov-finops.yml
+  - type: Examples
+    url: examples/bls-get-unemployment-rate-example.json
+  - type: Examples
+    url: examples/bls-list-surveys-example.json
+  - type: Vocabulary
+    url: vocabulary/bls-gov-vocabulary.yml
 features:
   - name: Time Series Data Retrieval
     description: Retrieve historical time series for one or many BLS series IDs in a single JSON response.
