@@ -1,0 +1,605 @@
+openapi: 3.1.0
+info:
+  title: BLS Public Data API
+  description: >-
+    The Bureau of Labor Statistics (BLS) Public Data API allows developers to
+    retrieve published historical time series data from all BLS surveys. Version 2
+    requires a free API registration key and provides higher query limits: up to
+    500 daily queries, 50 series per request, and 20 years of data. The API covers
+    Consumer Price Index (CPI), employment and unemployment statistics, wages,
+    productivity, industry employment, and occupational statistics.
+  version: '2.0'
+  contact:
+    name: BLS Developer Support
+    url: https://www.bls.gov/developers/home.htm
+    email: data_staff@bls.gov
+  termsOfService: https://www.bls.gov/developers/termsOfService.htm
+  license:
+    name: Public Domain
+    url: https://www.bls.gov/developers/termsOfService.htm
+externalDocs:
+  description: BLS Developers Home
+  url: https://www.bls.gov/developers/home.htm
+servers:
+  - url: https://api.bls.gov/publicAPI/v2
+    description: BLS Public Data API v2 (requires registration key)
+  - url: https://api.bls.gov/publicAPI/v1
+    description: BLS Public Data API v1 (no registration required)
+tags:
+  - name: Time Series
+    description: Retrieve time series data for BLS statistical series
+  - name: Surveys
+    description: Discover and list available BLS surveys
+  - name: Popular Series
+    description: Retrieve the most popular BLS series identifiers
+paths:
+  /timeseries/data/:
+    post:
+      operationId: getMultipleTimeSeries
+      summary: Get Multiple Time Series Data
+      description: >-
+        Retrieve time series data for one or more BLS series IDs. Version 2
+        supports up to 50 series per request, date range filtering, optional
+        calculations (net change, percent change), annual averages, and
+        catalog descriptions. Requires a registered API key in the request body.
+      tags:
+        - Time Series
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeSeriesRequest'
+            examples:
+              single-series:
+                summary: Single Series Request
+                value:
+                  seriesid:
+                    - LNS14000000
+                  startyear: '2020'
+                  endyear: '2024'
+                  registrationkey: YOUR_API_KEY
+              multi-series:
+                summary: Multiple Series with Calculations
+                value:
+                  seriesid:
+                    - LNS14000000
+                    - CUUR0000SA0
+                    - CES0000000001
+                  startyear: '2022'
+                  endyear: '2024'
+                  catalog: true
+                  calculations: true
+                  annualaverage: true
+                  registrationkey: YOUR_API_KEY
+      responses:
+        '200':
+          description: Successful time series data response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesResponse'
+              example:
+                status: REQUEST_SUCCEEDED
+                responseTime: 78
+                message: []
+                Results:
+                  series:
+                    - seriesID: LNS14000000
+                      catalog:
+                        series_title: Unemployment Rate
+                        series_id: LNS14000000
+                        seasonality: Seasonally Adjusted
+                        survey_name: Current Population Survey
+                        measure_data_type: Percent
+                      data:
+                        - year: '2024'
+                          period: M01
+                          periodName: January
+                          value: '3.7'
+                          footnotes:
+                            - code: P
+                              text: Preliminary
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /timeseries/data/{seriesId}:
+    get:
+      operationId: getSingleTimeSeries
+      summary: Get Single Time Series Data
+      description: >-
+        Retrieve time series data for a single BLS series ID using a GET
+        request. This endpoint works with both v1 and v2. For v2, include
+        the registration key as a query parameter for higher limits.
+      tags:
+        - Time Series
+      parameters:
+        - name: seriesId
+          in: path
+          required: true
+          description: >-
+            The BLS series identifier (e.g., LNS14000000 for national
+            unemployment rate, CUUR0000SA0 for CPI-U All Items)
+          schema:
+            type: string
+            pattern: '^[A-Z]{2,4}[0-9A-Z]{6,18}$'
+          example: LNS14000000
+        - name: registrationkey
+          in: query
+          required: false
+          description: Your registered BLS API key (required for v2 higher limits)
+          schema:
+            type: string
+        - name: startyear
+          in: query
+          required: false
+          description: Beginning year for data range (4-digit year)
+          schema:
+            type: string
+            pattern: '^\d{4}$'
+          example: '2020'
+        - name: endyear
+          in: query
+          required: false
+          description: Ending year for data range (4-digit year)
+          schema:
+            type: string
+            pattern: '^\d{4}$'
+          example: '2024'
+        - name: catalog
+          in: query
+          required: false
+          description: Include series catalog/description information in response (v2 only)
+          schema:
+            type: boolean
+        - name: calculations
+          in: query
+          required: false
+          description: Include net change and percent change calculations (v2 only)
+          schema:
+            type: boolean
+        - name: annualaverage
+          in: query
+          required: false
+          description: Include annual average values (v2 only)
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful time series data response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Series not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /surveys:
+    get:
+      operationId: listSurveys
+      summary: List All BLS Surveys
+      description: >-
+        Returns a list of all BLS surveys with their abbreviations, names, and
+        metadata. Use this endpoint to discover available survey types and their
+        associated series prefixes.
+      tags:
+        - Surveys
+      parameters:
+        - name: registrationkey
+          in: query
+          required: false
+          description: Your registered BLS API key
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of all available BLS surveys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveysResponse'
+              example:
+                status: REQUEST_SUCCEEDED
+                responseTime: 45
+                message: []
+                Results:
+                  survey:
+                    - survey_abbreviation: CU
+                      survey_name: Consumer Price Index - All Urban Consumers
+                    - survey_abbreviation: LN
+                      survey_name: Current Population Survey
+                    - survey_abbreviation: CE
+                      survey_name: Current Employment Statistics
+                    - survey_abbreviation: OE
+                      survey_name: Occupational Employment and Wage Statistics
+  /surveys/{surveyAbbreviation}:
+    get:
+      operationId: getSurveyDetails
+      summary: Get Survey Details
+      description: >-
+        Returns metadata and information for a specific BLS survey identified
+        by its abbreviation code.
+      tags:
+        - Surveys
+      parameters:
+        - name: surveyAbbreviation
+          in: path
+          required: true
+          description: The BLS survey abbreviation code (e.g., CU, LN, CE)
+          schema:
+            type: string
+          example: CU
+        - name: registrationkey
+          in: query
+          required: false
+          description: Your registered BLS API key
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Survey details response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyDetailResponse'
+        '404':
+          description: Survey not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /timeseries/popular:
+    get:
+      operationId: getPopularSeries
+      summary: Get Popular BLS Series
+      description: >-
+        Returns a list of the 25 most popular BLS series IDs across all
+        surveys. Useful for discovering commonly referenced economic indicators.
+      tags:
+        - Popular Series
+      parameters:
+        - name: registrationkey
+          in: query
+          required: false
+          description: Your registered BLS API key
+          schema:
+            type: string
+        - name: survey
+          in: query
+          required: false
+          description: Filter popular series by survey abbreviation
+          schema:
+            type: string
+          example: CU
+      responses:
+        '200':
+          description: List of popular series IDs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PopularSeriesResponse'
+              example:
+                status: REQUEST_SUCCEEDED
+                responseTime: 30
+                message: []
+                Results:
+                  series:
+                    - seriesID: LNS14000000
+                      catalog:
+                        series_title: Unemployment Rate
+                        survey_name: Current Population Survey
+                    - seriesID: CUUR0000SA0
+                      catalog:
+                        series_title: All items in U.S. city average, all urban consumers
+                        survey_name: Consumer Price Index - All Urban Consumers
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: query
+      name: registrationkey
+      description: >-
+        Free API registration key from https://data.bls.gov/registrationEngine/.
+        Required for v2 API access with higher rate limits.
+  schemas:
+    TimeSeriesRequest:
+      type: object
+      required:
+        - seriesid
+      properties:
+        seriesid:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          maxItems: 50
+          description: Array of BLS series IDs (max 50 for v2)
+          example:
+            - LNS14000000
+            - CUUR0000SA0
+        startyear:
+          type: string
+          pattern: '^\d{4}$'
+          description: Start year for data retrieval (4-digit year)
+          example: '2020'
+        endyear:
+          type: string
+          pattern: '^\d{4}$'
+          description: End year for data retrieval (4-digit year)
+          example: '2024'
+        catalog:
+          type: boolean
+          description: Include series catalog/description metadata (v2 only)
+          default: false
+        calculations:
+          type: boolean
+          description: Include net change and percent change calculations (v2 only)
+          default: false
+        annualaverage:
+          type: boolean
+          description: Include annual average values (v2 only)
+          default: false
+        aspects:
+          type: boolean
+          description: Include aspect metadata for data points (v2 only)
+          default: false
+        registrationkey:
+          type: string
+          description: BLS API registration key (required for v2)
+    TimeSeriesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - REQUEST_SUCCEEDED
+            - REQUEST_FAILED_ERROR
+            - REQUEST_NOT_PROCESSED
+          description: Overall request status
+        responseTime:
+          type: integer
+          description: Server processing time in milliseconds
+        message:
+          type: array
+          items:
+            type: string
+          description: Informational or error messages
+        Results:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                $ref: '#/components/schemas/SeriesResult'
+    SeriesResult:
+      type: object
+      properties:
+        seriesID:
+          type: string
+          description: The BLS series identifier
+          example: LNS14000000
+        catalog:
+          $ref: '#/components/schemas/SeriesCatalog'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataPoint'
+        calculations:
+          $ref: '#/components/schemas/Calculations'
+    SeriesCatalog:
+      type: object
+      description: Metadata description of a BLS series (v2 only)
+      properties:
+        series_title:
+          type: string
+          description: Human-readable title of the series
+          example: Unemployment Rate
+        series_id:
+          type: string
+          description: The series identifier
+        seasonality:
+          type: string
+          description: Whether data is seasonally adjusted
+          example: Seasonally Adjusted
+        survey_name:
+          type: string
+          description: Name of the BLS survey program
+          example: Current Population Survey
+        survey_abbreviation:
+          type: string
+          description: Abbreviated survey code
+          example: LN
+        measure_data_type:
+          type: string
+          description: Type of measurement
+          example: Percent
+        commerce_industry:
+          type: string
+          description: Industry classification if applicable
+        occupation:
+          type: string
+          description: Occupation if applicable
+        area:
+          type: string
+          description: Geographic area
+    DataPoint:
+      type: object
+      properties:
+        year:
+          type: string
+          description: The year of the data observation
+          example: '2024'
+        period:
+          type: string
+          description: The period code (M01-M12 for monthly, Q01-Q04 quarterly, A01 annual)
+          example: M01
+        periodName:
+          type: string
+          description: Human-readable period name
+          example: January
+        value:
+          type: string
+          description: The statistical value for this data point
+          example: '3.7'
+        footnotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Footnote'
+        calculations:
+          $ref: '#/components/schemas/Calculations'
+        aspects:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Footnote:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Footnote code letter
+          example: P
+        text:
+          type: string
+          description: Footnote description text
+          example: Preliminary
+    Calculations:
+      type: object
+      description: Statistical calculations for a data point (v2 only)
+      properties:
+        net_changes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Net change values by period type
+        pct_changes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Percent change values by period type
+    SurveysResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/Survey'
+    Survey:
+      type: object
+      properties:
+        survey_abbreviation:
+          type: string
+          description: Two-letter survey abbreviation code
+          example: CU
+        survey_name:
+          type: string
+          description: Full name of the BLS survey program
+          example: Consumer Price Index - All Urban Consumers
+    SurveyDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/SurveyDetail'
+    SurveyDetail:
+      type: object
+      properties:
+        survey_abbreviation:
+          type: string
+        survey_name:
+          type: string
+        popular_series:
+          type: array
+          items:
+            type: object
+            properties:
+              seriesID:
+                type: string
+              series_title:
+                type: string
+    PopularSeriesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                $ref: '#/components/schemas/PopularSeries'
+    PopularSeries:
+      type: object
+      properties:
+        seriesID:
+          type: string
+          description: The BLS series identifier
+          example: LNS14000000
+        catalog:
+          $ref: '#/components/schemas/SeriesCatalog'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - REQUEST_FAILED_ERROR
+            - REQUEST_NOT_PROCESSED
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+          description: Error message details
+        Results:
+          type: object
+          description: Empty results object

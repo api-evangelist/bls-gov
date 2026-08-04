@@ -1,0 +1,18 @@
+{
+  "provider": "bls-gov",
+  "sources": [
+    "bls-gov-popular-series-api-openapi.yml",
+    "bls-gov-surveys-api-openapi.yml",
+    "bls-gov-time-series-api-openapi.yml"
+  ],
+  "outputs": [
+    "bls-gov-popular-series-api-openapi.yml",
+    "bls-gov-surveys-api-openapi.yml",
+    "bls-gov-time-series-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
