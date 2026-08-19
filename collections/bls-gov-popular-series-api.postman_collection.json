@@ -1,0 +1,126 @@
+{
+  "item": [
+    {
+      "id": "3604f7a1-4f1b-4669-a2f9-51cb8ff7697a",
+      "name": "Popular Series",
+      "description": {
+        "content": "Retrieve the most popular BLS series identifiers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0a7dd1f0-1537-4c90-834d-15e717c3a836",
+          "name": "Get Popular BLS Series",
+          "request": {
+            "name": "Get Popular BLS Series",
+            "description": {
+              "content": "Returns a list of the 25 most popular BLS series IDs across all surveys. Useful for discovering commonly referenced economic indicators.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "timeseries",
+                "popular"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "registrationkey",
+                  "value": "<string>",
+                  "description": "Your registered BLS API key"
+                },
+                {
+                  "disabled": false,
+                  "key": "survey",
+                  "value": "<string>",
+                  "description": "Filter popular series by survey abbreviation"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "39780f0b-a9f7-461b-9b7b-e726aec84b81",
+              "name": "List of popular series IDs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeseries",
+                    "popular"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "registrationkey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "survey",
+                      "value": "CU"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"REQUEST_SUCCEEDED\",\n  \"responseTime\": 30,\n  \"message\": [],\n  \"Results\": {\n    \"series\": [\n      {\n        \"seriesID\": \"LNS14000000\",\n        \"catalog\": {\n          \"series_title\": \"Unemployment Rate\",\n          \"survey_name\": \"Current Population Survey\"\n        }\n      },\n      {\n        \"seriesID\": \"CUUR0000SA0\",\n        \"catalog\": {\n          \"series_title\": \"All items in U.S. city average, all urban consumers\",\n          \"survey_name\": \"Consumer Price Index - All Urban Consumers\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bls.gov/publicAPI/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b9cf6a81-05c6-4d8c-b55a-605094648d27",
+    "name": "BLS Public Data Popular Series API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bureau of Labor Statistics (BLS) Public Data API allows developers to retrieve published historical time series data from all BLS surveys. Version 2 requires a free API registration key and provides higher query limits: up to 500 daily queries, 50 series per request, and 20 years of data. The API covers Consumer Price Index (CPI), employment and unemployment statistics, wages, productivity, industry employment, and occupational statistics.\n\nContact Support:\n Name: BLS Developer Support\n Email: data_staff@bls.gov",
+      "type": "text/plain"
+    }
+  }
+}

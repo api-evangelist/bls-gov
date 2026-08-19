@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BLS Public Data Popular Series API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Popular Series",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Popular BLS Series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/timeseries/popular",
+            "params": [
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key"
+              },
+              {
+                "name": "survey",
+                "value": "CU",
+                "type": "query",
+                "description": "Filter popular series by survey abbreviation"
+              }
+            ]
+          },
+          "docs": "Returns a list of the 25 most popular BLS series IDs across all surveys. Useful for discovering commonly referenced economic indicators."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

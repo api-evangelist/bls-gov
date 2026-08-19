@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "68e408ed-4e28-425b-bf3a-66364f3778a2",
+      "name": "Surveys",
+      "description": {
+        "content": "Discover and list available BLS surveys",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fb7b857b-e51c-4901-9723-a84cc7c943c6",
+          "name": "List All BLS Surveys",
+          "request": {
+            "name": "List All BLS Surveys",
+            "description": {
+              "content": "Returns a list of all BLS surveys with their abbreviations, names, and metadata. Use this endpoint to discover available survey types and their associated series prefixes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "surveys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "registrationkey",
+                  "value": "<string>",
+                  "description": "Your registered BLS API key"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8aebcae0-ef23-4270-91c6-1fed133cb758",
+              "name": "List of all available BLS surveys",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "surveys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "registrationkey",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"REQUEST_SUCCEEDED\",\n  \"responseTime\": 45,\n  \"message\": [],\n  \"Results\": {\n    \"survey\": [\n      {\n        \"survey_abbreviation\": \"CU\",\n        \"survey_name\": \"Consumer Price Index - All Urban Consumers\"\n      },\n      {\n        \"survey_abbreviation\": \"LN\",\n        \"survey_name\": \"Current Population Survey\"\n      },\n      {\n        \"survey_abbreviation\": \"CE\",\n        \"survey_name\": \"Current Employment Statistics\"\n      },\n      {\n        \"survey_abbreviation\": \"OE\",\n        \"survey_name\": \"Occupational Employment and Wage Statistics\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c58d7d1-045e-4e8c-a03a-47c47877f8c6",
+          "name": "Get Survey Details",
+          "request": {
+            "name": "Get Survey Details",
+            "description": {
+              "content": "Returns metadata and information for a specific BLS survey identified by its abbreviation code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "surveys",
+                ":surveyAbbreviation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "registrationkey",
+                  "value": "<string>",
+                  "description": "Your registered BLS API key"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "surveyAbbreviation",
+                  "description": "(Required) The BLS survey abbreviation code (e.g., CU, LN, CE)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e849655-fab3-4c6f-9f61-b8475c792028",
+              "name": "Survey details response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "surveys",
+                    ":surveyAbbreviation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "registrationkey",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "surveyAbbreviation",
+                      "description": "(Required) The BLS survey abbreviation code (e.g., CU, LN, CE)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"responseTime\": 4647,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"Results\": {\n    \"survey\": [\n      {\n        \"survey_abbreviation\": \"string\",\n        \"survey_name\": \"string\",\n        \"popular_series\": [\n          {\n            \"seriesID\": \"string\",\n            \"series_title\": \"string\"\n          },\n          {\n            \"seriesID\": \"string\",\n            \"series_title\": \"string\"\n          }\n        ]\n      },\n      {\n        \"survey_abbreviation\": \"string\",\n        \"survey_name\": \"string\",\n        \"popular_series\": [\n          {\n            \"seriesID\": \"string\",\n            \"series_title\": \"string\"\n          },\n          {\n            \"seriesID\": \"string\",\n            \"series_title\": \"string\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c1f0045-8c68-4dc6-a703-dc77c26eaf1d",
+              "name": "Survey not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "surveys",
+                    ":surveyAbbreviation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "registrationkey",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "surveyAbbreviation",
+                      "description": "(Required) The BLS survey abbreviation code (e.g., CU, LN, CE)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"REQUEST_FAILED_ERROR\",\n  \"responseTime\": 4165,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"Results\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bls.gov/publicAPI/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c50b2de9-b1ef-462c-93ab-cc85013ba35a",
+    "name": "BLS Public Data Popular Series Surveys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bureau of Labor Statistics (BLS) Public Data API allows developers to retrieve published historical time series data from all BLS surveys. Version 2 requires a free API registration key and provides higher query limits: up to 500 daily queries, 50 series per request, and 20 years of data. The API covers Consumer Price Index (CPI), employment and unemployment statistics, wages, productivity, industry employment, and occupational statistics.\n\nContact Support:\n Name: BLS Developer Support\n Email: data_staff@bls.gov",
+      "type": "text/plain"
+    }
+  }
+}

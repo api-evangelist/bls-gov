@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BLS Public Data Popular Series Surveys API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All BLS Surveys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/surveys",
+            "params": [
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key"
+              }
+            ]
+          },
+          "docs": "Returns a list of all BLS surveys with their abbreviations, names, and metadata. Use this endpoint to discover available survey types and their associated series prefixes."
+        },
+        {
+          "info": {
+            "name": "Get Survey Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bls.gov/publicAPI/v2/surveys/:surveyAbbreviation",
+            "params": [
+              {
+                "name": "surveyAbbreviation",
+                "value": "CU",
+                "type": "path",
+                "description": "The BLS survey abbreviation code (e.g., CU, LN, CE)"
+              },
+              {
+                "name": "registrationkey",
+                "value": "",
+                "type": "query",
+                "description": "Your registered BLS API key"
+              }
+            ]
+          },
+          "docs": "Returns metadata and information for a specific BLS survey identified by its abbreviation code."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
