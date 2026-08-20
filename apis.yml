@@ -28,6 +28,18 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bls-gov.png
 tags:
+  - Federal-Government
+  - Labor Statistics
+  - Economic Data
+  - Consumer Price Index
+  - Producer Price Index
+  - Employment
+  - Unemployment
+  - Wages
+  - Productivity
+  - Open Data
+  - Time Series
+tags_raw:
   - Federal Government
   - Labor Statistics
   - Economic Data
