@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: BLS Public Data Popular Series Time Series API
+  title: BLS Public Data Time Series API
   description: 'The Bureau of Labor Statistics (BLS) Public Data API allows developers to retrieve published historical time series data from all BLS surveys. Version 2 requires a free API registration key and provides higher query limits: up to 500 daily queries, 50 series per request, and 20 years of data. The API covers Consumer Price Index (CPI), employment and unemployment statistics, wages, productivity, industry employment, and occupational statistics.'
   version: '2.0'
   contact:
@@ -172,36 +172,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    DataPoint:
-      type: object
-      properties:
-        year:
-          type: string
-          description: The year of the data observation
-          example: '2024'
-        period:
-          type: string
-          description: The period code (M01-M12 for monthly, Q01-Q04 quarterly, A01 annual)
-          example: M01
-        periodName:
-          type: string
-          description: Human-readable period name
-          example: January
-        value:
-          type: string
-          description: The statistical value for this data point
-          example: '3.7'
-        footnotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Footnote'
-        calculations:
-          $ref: '#/components/schemas/Calculations'
-        aspects:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
     SeriesResult:
       type: object
       properties:
@@ -261,6 +231,75 @@ components:
         registrationkey:
           type: string
           description: BLS API registration key (required for v2)
+    Calculations:
+      type: object
+      description: Statistical calculations for a data point (v2 only)
+      properties:
+        net_changes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Net change values by period type
+        pct_changes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Percent change values by period type
+    TimeSeriesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - REQUEST_SUCCEEDED
+          - REQUEST_FAILED_ERROR
+          - REQUEST_NOT_PROCESSED
+          description: Overall request status
+        responseTime:
+          type: integer
+          description: Server processing time in milliseconds
+        message:
+          type: array
+          items:
+            type: string
+          description: Informational or error messages
+        Results:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                $ref: '#/components/schemas/SeriesResult'
+    DataPoint:
+      type: object
+      properties:
+        year:
+          type: string
+          description: The year of the data observation
+          example: '2024'
+        period:
+          type: string
+          description: The period code (M01-M12 for monthly, Q01-Q04 quarterly, A01 annual)
+          example: M01
+        periodName:
+          type: string
+          description: Human-readable period name
+          example: January
+        value:
+          type: string
+          description: The statistical value for this data point
+          example: '3.7'
+        footnotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Footnote'
+        calculations:
+          $ref: '#/components/schemas/Calculations'
+        aspects:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
     Footnote:
       type: object
       properties:
@@ -272,6 +311,24 @@ components:
           type: string
           description: Footnote description text
           example: Preliminary
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - REQUEST_FAILED_ERROR
+          - REQUEST_NOT_PROCESSED
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+          description: Error message details
+        Results:
+          type: object
+          description: Empty results object
     SeriesCatalog:
       type: object
       description: Metadata description of a BLS series (v2 only)
@@ -308,63 +365,6 @@ components:
         area:
           type: string
           description: Geographic area
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - REQUEST_FAILED_ERROR
-          - REQUEST_NOT_PROCESSED
-        responseTime:
-          type: integer
-        message:
-          type: array
-          items:
-            type: string
-          description: Error message details
-        Results:
-          type: object
-          description: Empty results object
-    TimeSeriesResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - REQUEST_SUCCEEDED
-          - REQUEST_FAILED_ERROR
-          - REQUEST_NOT_PROCESSED
-          description: Overall request status
-        responseTime:
-          type: integer
-          description: Server processing time in milliseconds
-        message:
-          type: array
-          items:
-            type: string
-          description: Informational or error messages
-        Results:
-          type: object
-          properties:
-            series:
-              type: array
-              items:
-                $ref: '#/components/schemas/SeriesResult'
-    Calculations:
-      type: object
-      description: Statistical calculations for a data point (v2 only)
-      properties:
-        net_changes:
-          type: object
-          additionalProperties:
-            type: string
-          description: Net change values by period type
-        pct_changes:
-          type: object
-          additionalProperties:
-            type: string
-          description: Percent change values by period type
   securitySchemes:
     ApiKey:
       type: apiKey

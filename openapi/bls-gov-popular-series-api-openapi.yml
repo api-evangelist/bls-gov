@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: BLS Public Data Popular Series API
   description: 'The Bureau of Labor Statistics (BLS) Public Data API allows developers to retrieve published historical time series data from all BLS surveys. Version 2 requires a free API registration key and provides higher query limits: up to 500 daily queries, 50 series per request, and 20 years of data. The API covers Consumer Price Index (CPI), employment and unemployment statistics, wages, productivity, industry employment, and occupational statistics.'
@@ -64,15 +64,6 @@ paths:
                       survey_name: Consumer Price Index - All Urban Consumers
 components:
   schemas:
-    PopularSeries:
-      type: object
-      properties:
-        seriesID:
-          type: string
-          description: The BLS series identifier
-          example: LNS14000000
-        catalog:
-          $ref: '#/components/schemas/SeriesCatalog'
     PopularSeriesResponse:
       type: object
       properties:
@@ -127,6 +118,15 @@ components:
         area:
           type: string
           description: Geographic area
+    PopularSeries:
+      type: object
+      properties:
+        seriesID:
+          type: string
+          description: The BLS series identifier
+          example: LNS14000000
+        catalog:
+          $ref: '#/components/schemas/SeriesCatalog'
   securitySchemes:
     ApiKey:
       type: apiKey
