@@ -39,7 +39,7 @@ position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bls-gov.png
 tags:
-- Federal-Government
+- Federal Government
 - Labor Statistics
 - Economic Data
 - Consumer Price Index
@@ -50,6 +50,7 @@ tags:
 - Productivity
 - Open Data
 - Time Series
+- Government Data
 tags_raw:
 - Federal Government
 - Labor Statistics
@@ -62,6 +63,8 @@ tags_raw:
 - Productivity
 - Open Data
 - Time Series
+- Federal-Government
+- Government Data
 created: '2026-05-25'
 modified: '2026-05-25'
 url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/apis.yml

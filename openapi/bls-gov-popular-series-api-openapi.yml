@@ -64,24 +64,6 @@ paths:
                       survey_name: Consumer Price Index - All Urban Consumers
 components:
   schemas:
-    PopularSeriesResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        responseTime:
-          type: integer
-        message:
-          type: array
-          items:
-            type: string
-        Results:
-          type: object
-          properties:
-            series:
-              type: array
-              items:
-                $ref: '#/components/schemas/PopularSeries'
     SeriesCatalog:
       type: object
       description: Metadata description of a BLS series (v2 only)
@@ -118,6 +100,24 @@ components:
         area:
           type: string
           description: Geographic area
+    PopularSeriesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                $ref: '#/components/schemas/PopularSeries'
     PopularSeries:
       type: object
       properties:

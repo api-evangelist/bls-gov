@@ -107,42 +107,6 @@ components:
                 type: string
               series_title:
                 type: string
-    SurveyDetailResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        responseTime:
-          type: integer
-        message:
-          type: array
-          items:
-            type: string
-        Results:
-          type: object
-          properties:
-            survey:
-              type: array
-              items:
-                $ref: '#/components/schemas/SurveyDetail'
-    SurveysResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        responseTime:
-          type: integer
-        message:
-          type: array
-          items:
-            type: string
-        Results:
-          type: object
-          properties:
-            survey:
-              type: array
-              items:
-                $ref: '#/components/schemas/Survey'
     Survey:
       type: object
       properties:
@@ -172,6 +136,42 @@ components:
         Results:
           type: object
           description: Empty results object
+    SurveysResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/Survey'
+    SurveyDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/SurveyDetail'
   securitySchemes:
     ApiKey:
       type: apiKey
