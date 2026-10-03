@@ -91,22 +91,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    SurveyDetail:
-      type: object
-      properties:
-        survey_abbreviation:
-          type: string
-        survey_name:
-          type: string
-        popular_series:
-          type: array
-          items:
-            type: object
-            properties:
-              seriesID:
-                type: string
-              series_title:
-                type: string
     Survey:
       type: object
       properties:
@@ -118,42 +102,6 @@ components:
           type: string
           description: Full name of the BLS survey program
           example: Consumer Price Index - All Urban Consumers
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - REQUEST_FAILED_ERROR
-          - REQUEST_NOT_PROCESSED
-        responseTime:
-          type: integer
-        message:
-          type: array
-          items:
-            type: string
-          description: Error message details
-        Results:
-          type: object
-          description: Empty results object
-    SurveysResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        responseTime:
-          type: integer
-        message:
-          type: array
-          items:
-            type: string
-        Results:
-          type: object
-          properties:
-            survey:
-              type: array
-              items:
-                $ref: '#/components/schemas/Survey'
     SurveyDetailResponse:
       type: object
       properties:
@@ -172,6 +120,58 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/SurveyDetail'
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - REQUEST_FAILED_ERROR
+          - REQUEST_NOT_PROCESSED
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+          description: Error message details
+        Results:
+          type: object
+          description: Empty results object
+    SurveyDetail:
+      type: object
+      properties:
+        survey_abbreviation:
+          type: string
+        survey_name:
+          type: string
+        popular_series:
+          type: array
+          items:
+            type: object
+            properties:
+              seriesID:
+                type: string
+              series_title:
+                type: string
+    SurveysResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        responseTime:
+          type: integer
+        message:
+          type: array
+          items:
+            type: string
+        Results:
+          type: object
+          properties:
+            survey:
+              type: array
+              items:
+                $ref: '#/components/schemas/Survey'
   securitySchemes:
     ApiKey:
       type: apiKey

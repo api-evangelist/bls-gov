@@ -172,6 +172,46 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    TimeSeriesResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - REQUEST_SUCCEEDED
+          - REQUEST_FAILED_ERROR
+          - REQUEST_NOT_PROCESSED
+          description: Overall request status
+        responseTime:
+          type: integer
+          description: Server processing time in milliseconds
+        message:
+          type: array
+          items:
+            type: string
+          description: Informational or error messages
+        Results:
+          type: object
+          properties:
+            series:
+              type: array
+              items:
+                $ref: '#/components/schemas/SeriesResult'
+    SeriesResult:
+      type: object
+      properties:
+        seriesID:
+          type: string
+          description: The BLS series identifier
+          example: LNS14000000
+        catalog:
+          $ref: '#/components/schemas/SeriesCatalog'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataPoint'
+        calculations:
+          $ref: '#/components/schemas/Calculations'
     Calculations:
       type: object
       description: Statistical calculations for a data point (v2 only)
@@ -186,17 +226,6 @@ components:
           additionalProperties:
             type: string
           description: Percent change values by period type
-    Footnote:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Footnote code letter
-          example: P
-        text:
-          type: string
-          description: Footnote description text
-          example: Preliminary
     TimeSeriesRequest:
       type: object
       required:
@@ -241,6 +270,47 @@ components:
         registrationkey:
           type: string
           description: BLS API registration key (required for v2)
+    DataPoint:
+      type: object
+      properties:
+        year:
+          type: string
+          description: The year of the data observation
+          example: '2024'
+        period:
+          type: string
+          description: The period code (M01-M12 for monthly, Q01-Q04 quarterly, A01 annual)
+          example: M01
+        periodName:
+          type: string
+          description: Human-readable period name
+          example: January
+        value:
+          type: string
+          description: The statistical value for this data point
+          example: '3.7'
+        footnotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Footnote'
+        calculations:
+          $ref: '#/components/schemas/Calculations'
+        aspects:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Footnote:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Footnote code letter
+          example: P
+        text:
+          type: string
+          description: Footnote description text
+          example: Preliminary
     ErrorResponse:
       type: object
       properties:
@@ -259,21 +329,6 @@ components:
         Results:
           type: object
           description: Empty results object
-    SeriesResult:
-      type: object
-      properties:
-        seriesID:
-          type: string
-          description: The BLS series identifier
-          example: LNS14000000
-        catalog:
-          $ref: '#/components/schemas/SeriesCatalog'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataPoint'
-        calculations:
-          $ref: '#/components/schemas/Calculations'
     SeriesCatalog:
       type: object
       description: Metadata description of a BLS series (v2 only)
@@ -310,61 +365,6 @@ components:
         area:
           type: string
           description: Geographic area
-    DataPoint:
-      type: object
-      properties:
-        year:
-          type: string
-          description: The year of the data observation
-          example: '2024'
-        period:
-          type: string
-          description: The period code (M01-M12 for monthly, Q01-Q04 quarterly, A01 annual)
-          example: M01
-        periodName:
-          type: string
-          description: Human-readable period name
-          example: January
-        value:
-          type: string
-          description: The statistical value for this data point
-          example: '3.7'
-        footnotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Footnote'
-        calculations:
-          $ref: '#/components/schemas/Calculations'
-        aspects:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-    TimeSeriesResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - REQUEST_SUCCEEDED
-          - REQUEST_FAILED_ERROR
-          - REQUEST_NOT_PROCESSED
-          description: Overall request status
-        responseTime:
-          type: integer
-          description: Server processing time in milliseconds
-        message:
-          type: array
-          items:
-            type: string
-          description: Informational or error messages
-        Results:
-          type: object
-          properties:
-            series:
-              type: array
-              items:
-                $ref: '#/components/schemas/SeriesResult'
   securitySchemes:
     ApiKey:
       type: apiKey
