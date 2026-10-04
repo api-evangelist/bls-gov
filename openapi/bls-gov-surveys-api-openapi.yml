@@ -91,17 +91,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Survey:
-      type: object
-      properties:
-        survey_abbreviation:
-          type: string
-          description: Two-letter survey abbreviation code
-          example: CU
-        survey_name:
-          type: string
-          description: Full name of the BLS survey program
-          example: Consumer Price Index - All Urban Consumers
     SurveyDetailResponse:
       type: object
       properties:
@@ -138,6 +127,17 @@ components:
         Results:
           type: object
           description: Empty results object
+    Survey:
+      type: object
+      properties:
+        survey_abbreviation:
+          type: string
+          description: Two-letter survey abbreviation code
+          example: CU
+        survey_name:
+          type: string
+          description: Full name of the BLS survey program
+          example: Consumer Price Index - All Urban Consumers
     SurveyDetail:
       type: object
       properties:

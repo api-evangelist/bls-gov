@@ -64,6 +64,15 @@ paths:
                       survey_name: Consumer Price Index - All Urban Consumers
 components:
   schemas:
+    PopularSeries:
+      type: object
+      properties:
+        seriesID:
+          type: string
+          description: The BLS series identifier
+          example: LNS14000000
+        catalog:
+          $ref: '#/components/schemas/SeriesCatalog'
     PopularSeriesResponse:
       type: object
       properties:
@@ -82,15 +91,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/PopularSeries'
-    PopularSeries:
-      type: object
-      properties:
-        seriesID:
-          type: string
-          description: The BLS series identifier
-          example: LNS14000000
-        catalog:
-          $ref: '#/components/schemas/SeriesCatalog'
     SeriesCatalog:
       type: object
       description: Metadata description of a BLS series (v2 only)
