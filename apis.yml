@@ -66,7 +66,7 @@ tags_raw:
 - Federal-Government
 - Government Data
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-10-06'
 url: https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
@@ -273,6 +273,8 @@ integrations:
   description: BLS QCEW and OEWS data align with Census Bureau geographic and industry classifications (NAICS, SOC).
   url: https://www.census.gov/
 common:
+- url: https://www.bls.gov/feed/bls_latest.rss
+  type: BlogRSS
 - type: AgenticAccess
   url: agentic-access/bls-gov-agentic-access.yml
 - type: DomainSecurity
