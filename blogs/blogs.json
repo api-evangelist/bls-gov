@@ -2,10 +2,17 @@
   "repo": "bls-gov",
   "feeds": [
     {
-      "source": "https://www.youtube.com/user/blsgov",
+      "source": "https://www.bls.gov/bls/news.htm",
       "error": "HTTPError"
+    },
+    {
+      "source": "https://www.bls.gov/feed/bls_latest.rss",
+      "feed_url": "https://www.bls.gov/feed/bls_latest.rss",
+      "title": "",
+      "saved": 1,
+      "method": "feed"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-10-03T12:30:02Z"
+  "post_count": 1,
+  "fetched": "2026-10-10T13:15:00Z"
 }
