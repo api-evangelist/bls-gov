@@ -1,4 +1,4 @@
-# Bureau of Labor Statistics (bls-gov)
+# Bureau of Labor Statistics
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,92 +66,160 @@
 
 The U.S. Bureau of Labor Statistics (BLS) is the principal federal statistical agency responsible for measuring labor market activity, working conditions, price changes, and productivity in the U.S. economy. BLS operates the Public Data API at api.bls.gov, providing programmatic JSON access to published historical time series across more than 75 surveys — including the Consumer Price Index (CPI), Producer Price Index (PPI), Employment Situation (CES), Local Area Unemployment Statistics (LAUS), Quarterly Census of Employment and Wages (QCEW), Occupational Employment and Wage Statistics (OEWS), Employment Cost Index (ECI), Productivity, Import/Export Price Indexes, and Census of Fatal Occupational Injuries (CFOI). Version 1 is open without registration; Version 2 requires a free registration key and provides higher daily limits, more series per request, longer year ranges, catalog metadata, statistical calculations, and annual averages.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/apis.yml)
+**Areas:** Federal Government · Labor Statistics · Economic Data · Consumer Price Index · Producer Price Index · Employment · Unemployment · Wages · Productivity · Open Data · Time Series · Government Data
 
-## Scope
+## Bureau of Labor Statistics on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Bureau of Labor Statistics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bls-gov/](https://apis.io/providers/bls-gov/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (3)
 
-- Federal Government
-- Labor Statistics
-- Economic Data
-- Consumer Price Index
-- Producer Price Index
-- Employment
-- Unemployment
-- Wages
-- Productivity
-- Open Data
-- Time Series
+- [Bureau of Labor Statistics Popular Series API](https://apis.io/apis/bls-gov/bls-gov-popular-series-api/) — Retrieve the most popular BLS series identifiers
+- [Bureau of Labor Statistics Surveys API](https://apis.io/apis/bls-gov/bls-gov-surveys-api/) — Discover and list available BLS surveys
+- [Bureau of Labor Statistics Time Series API](https://apis.io/apis/bls-gov/bls-gov-time-series-api/) — Retrieve time series data for BLS statistical series
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-25
-- **Modified:** 2026-05-25
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### BLS Public Data API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The BLS Public Data API is the agency's public REST + JSON service for retrieving published historical time series across every BLS program. v1 is open and unauthenticated with smaller daily limits and per-request caps; v2 requires a free registration key and unlocks 500 queries per day, up to 50 series per request, up to 20 years per query, optional catalog metadata, net/percent-change calculations, and annual averages. All requests return a uniform JSON envelope with status, responseTime, and Results.series, where each series carries data points keyed by year and period (M01–M12 for monthly, Q01–Q04 for quarterly, S01–S03 for semi annual, A01 for annual, M13 for annual averages).
+- [Bls Gov Agentic Access](https://apis.io/agentic-access/bls-gov/bls-gov-agentic-access/)
 
-- **Human URL:** [https://www.bls.gov/developers/home.htm](https://www.bls.gov/developers/home.htm)
-- **Base URL:** `https://api.bls.gov/publicAPI/v2`
+#### JSON Schema (1)
 
-#### Tags
+The data models the API reads and writes.
 
-- Labor Statistics
-- Employment
-- Unemployment
-- Consumer Price Index
-- Producer Price Index
-- Economic Data
-- Time Series
-- Open Data
+- [BLS Time Series](https://apis.io/schemas/bls-gov/bls-time-series/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://www.bls.gov/developers/home.htm)
-- [Documentation](https://www.bls.gov/developers/api_signature_v2.htm)
-- [Getting Started](https://www.bls.gov/developers/api_FAQs.htm)
-- [Registration](https://data.bls.gov/registrationEngine/)
-- [Terms of Service](https://www.bls.gov/developers/termsOfService.htm)
-- [Signature Examples](https://www.bls.gov/developers/api_sample_code.htm)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/openapi/bls-public-data-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-schema/bls-time-series-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-structure/bls-time-series-structure.json)
-- [JSON-LD](https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/json-ld/bls-gov-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Spectral Ruleset](https://raw.githubusercontent.com/api-evangelist/bls-gov/refs/heads/main/rules/bls-public-data-api-rules.yml)
-- [Data A P I](https://api.bls.gov/publicAPI/v2/timeseries/data/)
-- [Data A P I](https://api.bls.gov/publicAPI/v2/surveys)
-- [Data A P I](https://api.bls.gov/publicAPI/v2/timeseries/popular)
-- [Rate Limits](rate-limits/bls-gov-rate-limits.yml)
-- [Plans](plans/bls-gov-plans-pricing.yml)
-- [Fin Ops](finops/bls-gov-finops.yml)
-- [Examples](examples/bls-get-unemployment-rate-example.json)
-- [Examples](examples/bls-list-surveys-example.json)
-- [Vocabulary](vocabulary/bls-gov-vocabulary.yml)
-- [Postman Collection](collections/bls-public-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/bls-public-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Bls Time Series Structure](https://apis.io/json-structure/bls-gov/bls-time-series-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Bls Gov Context](https://apis.io/jsonld/bls-gov/bls-gov-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [US Bureau of Labor Statistics Vocabulary](https://apis.io/vocabularies/bls-gov/bls-gov-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Bls Get Unemployment Rate Example](https://apis.io/examples/bls-gov/bls-get-unemployment-rate-example/)
+- [Bls List Surveys Example](https://apis.io/examples/bls-gov/bls-list-surveys-example/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [BLS Public Data Popular Series API](https://apis.io/collections/bls-gov/open-bls-gov-popular-series-api/)
+- [BLS Public Data Popular Series Surveys API](https://apis.io/collections/bls-gov/open-bls-gov-surveys-api/)
+- [BLS Public Data Popular Series Time Series API](https://apis.io/collections/bls-gov/open-bls-gov-time-series-api/)
+- [BLS Public Data API](https://apis.io/collections/bls-gov/open-bls-public-data-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Bureau of Labor Statistics — jsonschema rules](https://apis.io/rules/bls-gov/bls-gov-jsonschema-spectral-rules/)
+- [Bureau of Labor Statistics — bls public data api rules](https://apis.io/rules/bls-gov/bls-public-data-api-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Bls Gov Authentication](https://apis.io/security/bls-gov/bls-gov-authentication/)
+- [Bls Gov Domain Security](https://apis.io/security/bls-gov/bls-gov-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Bls Gov Plans Pricing](https://apis.io/plans/bls-gov/bls-gov-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Bls Gov Rate Limits](https://apis.io/rate-limits/bls-gov/bls-gov-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Bls Gov Finops](https://apis.io/finops/bls-gov/bls-gov-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.bls.gov/)
-- [Developer](https://www.bls.gov/developers/)
 - [Documentation](https://www.bls.gov/developers/home.htm)
-- [Registration](https://data.bls.gov/registrationEngine/)
-- [Terms of Service](https://www.bls.gov/developers/termsOfService.htm)
-- [Contact Us](https://www.bls.gov/contact/)
-- [LinkedIn](https://www.linkedin.com/company/bureau-of-labor-statistics)
-- [Twitter](https://twitter.com/BLS_gov)
-- [Facebook](https://www.facebook.com/BLSgov)
-- [YouTube](https://www.youtube.com/user/blsgov)
+- [Blog](https://www.bls.gov/bls/news.htm)
+- [Terms of service](https://www.bls.gov/developers/termsOfService.htm)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 39.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 62.4 |
+| Contract governance | 23.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 33.3 |
+| Access clarity | 31.6 |
+
+**Agent readiness 30.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 20.6** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/bls-gov/](https://apis.io/providers/bls-gov/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Bureau of Labor Statistics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bls-gov/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
